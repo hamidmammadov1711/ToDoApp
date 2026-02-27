@@ -33,7 +33,9 @@ def read_all(db: db_dependency):
     """
     :param db: This parameter is a database session that is provided by the get_db dependency. It allows the function to interact with the database.
      The function uses this session to query the Todos table and retrieve all records, which are then returned as a response to the client.
-    :return: The function returns a list of all records from the Todos table in the database. Each record is represented as an instance of the Todos model, which includes fields such as id, title, description, priority, and complete. The response will be a JSON array containing these records when the endpoint is accessed via a GET request to the root URL ("/").
+    :return: The function returns a list of all records from the Todos table in the database.
+     Each record is represented as an instance of the Todos model, which includes fields such as id, title, description, priority, and complete.
+     The response will be a JSON array containing these records when the endpoint is accessed via a GET request to the root URL ("/").
 
     """
     return db.query(Todos).all()
