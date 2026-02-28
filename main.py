@@ -5,12 +5,13 @@ from sqlalchemy.orm import Session
 from starlette import status
 
 import models
-from database import SessionLocal, engine
+from database import session_local, engine
 from models import Todos
 
 app = FastAPI()
-
+# This line creates all the tables defined in the models (in this case, the Todos table) in the database if they do not already exist. It uses the metadata from the Base class to generate the necessary SQL commands to create the tables based on the defined models.
 models.Base.metadata.create_all(bind=engine)
+
 
 def get_db():
     """
@@ -19,13 +20,17 @@ def get_db():
      yields it for use in the request,
      and ensures that the session is closed after the request is completed, even if an error occurs.
     """
-    db = SessionLocal()
+    db = session_local()
     try:
         yield db
     finally:
         db.close()
 
-db_dependency = Annotated[Session, Depends(get_db)] # This is a type annotation that indicates that the get_db
+
+# This is a type annotation that indicates that the get_db
+db_dependency = Annotated[Session, Depends(get_db)]
+
+
 # function is a dependency that provides a Session object for database interactions.
 
 @app.get("/", status_code=status.HTTP_200_OK)
@@ -39,4 +44,3 @@ def read_all(db: db_dependency):
 
     """
     return db.query(Todos).all()
-
