@@ -126,7 +126,7 @@
       <workItem from="1772290461294" duration="2352000" />
       <workItem from="1772293764500" duration="4913000" />
       <workItem from="1772335341782" duration="2089000" />
-      <workItem from="1772364802199" duration="623000" />
+      <workItem from="1772364802199" duration="6182000" />
     </task>
     <task id="LOCAL-00001" summary="initialize project structure with database models and configuration files">
       <option name="closed" value="true" />
@@ -152,7 +152,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772309634709</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="refactor database and model imports for consistency and clarity">
+      <option name="closed" value="true" />
+      <created>1772365548779</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1772365548780</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

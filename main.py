@@ -1,6 +1,7 @@
 from typing import Annotated
 
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Path
+from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 from starlette import status
 
@@ -31,7 +32,19 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 
 
-# function is a dependency that provides a Session object for database interactions.
+class TodoRequest(BaseModel):
+    """
+     This class defines a Pydantic model for a todo request. It includes fields for title, description, priority, and complete status.
+     The title field is a string that represents the title of the todo item.
+     The description field is a string that provides additional details about the todo item.
+     The priority field is an integer that indicates the priority level of the todo item.
+     The complete field is a boolean that indicates whether the todo item is completed or not, with a default value of False.
+    """
+    title: str = Field(min_length=3)
+    description: str = Field(min_length=3, max_length=100)
+    priority: int = Field(gt=0, lt=6)
+    complete: bool = False
+
 
 @app.get("/", status_code=status.HTTP_200_OK)
 def read_all(db: db_dependency):
@@ -47,7 +60,7 @@ def read_all(db: db_dependency):
 
 
 @app.get("/todo/{id}", status_code=status.HTTP_200_OK)
-def read_todo(db: db_dependency, id: int):
+def read_todo(db: db_dependency, id: int = Path(gt=0)):
     """
     :param id: This parameter is an integer that represents the unique identifier of a specific todo item in the database. It is extracted from the URL path when a client makes a GET request to the "/todo/{id}" endpoint.
     :param db: This parameter is a database session provided by the get_db dependency, allowing the function to interact with the database.
@@ -60,3 +73,19 @@ def read_todo(db: db_dependency, id: int):
     if todo_model is not None:
         return todo_model
     raise HTTPException(status_code=404, detail=f'Todo with id {id} not found')
+
+
+@app.post("/todo", status_code=status.HTTP_201_CREATED)
+def create_todo(db: db_dependency, todo_request: TodoRequest):
+    """
+    :param todo_request: This parameter is an instance of the TodoRequest Pydantic model, which represents the data sent by the client in the body of a POST request to create a new todo item. It includes fields such as title, description, priority, and complete status.
+    :param db: This parameter is a database session provided by the get_db dependency, allowing the function to interact with the database.
+     The function uses this session to create a new record in the Todos table based on the data provided in the todo_request. It then adds this new record to the database session, commits the transaction to save it to the database, and refreshes the session to retrieve any auto-generated fields (like id) before returning the newly created todo item as a response to the client.
+    :return: The function returns the newly created todo item as an instance of the Todos model, which includes fields such as id, title, description, priority, and complete. This response will be sent back to the client as a JSON object when they make a POST request to the "/todo" endpoint with the appropriate data in the request body.
+
+    """
+    todo_model = Todos(**todo_request.model_dump())
+    db.add(todo_model)
+    db.commit()
+    db.refresh(todo_model)
+    return todo_model
