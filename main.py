@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from starlette import status
 
@@ -44,3 +44,19 @@ def read_all(db: db_dependency):
 
     """
     return db.query(Todos).all()
+
+
+@app.get("/todo/{id}", status_code=status.HTTP_200_OK)
+def read_todo(db: db_dependency, id: int):
+    """
+    :param id: This parameter is an integer that represents the unique identifier of a specific todo item in the database. It is extracted from the URL path when a client makes a GET request to the "/todo/{id}" endpoint.
+    :param db: This parameter is a database session provided by the get_db dependency, allowing the function to interact with the database.
+     The function uses this session to query the Todos table and retrieve the record that matches the provided id, which is then returned as a response to the client.
+    :return: The function returns a single record from the Todos table that matches the provided id. This record is represented as an instance of the Todos model, which includes fields such as id, title, description, priority, and complete.
+     If a record with the specified id exists in the database, it will be returned as a JSON object when the endpoint is accessed via a GET request to "/todo/{id}". If no such record exists, it may return null or an appropriate error message depending on how you handle such cases in your application.
+
+    """
+    todo_model = db.query(Todos).filter(Todos.id == id).first()
+    if todo_model is not None:
+        return todo_model
+    raise HTTPException(status_code=404, detail=f'Todo with id {id} not found')
