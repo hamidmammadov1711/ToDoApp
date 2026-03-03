@@ -113,3 +113,20 @@ def update_todo(db: db_dependency,
         db.commit()
         return
     raise HTTPException(status_code=404, detail=f'Todo with id {id} not found')
+
+
+@app.delete("/todo/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_todo(db: db_dependency, todo_id: int = Path(gt=0)):
+    """
+    This function is an endpoint for deleting a specific todo item from the database.
+    It takes in a database session and the id of the todo item to be deleted.
+    The function first queries the database to find the existing todo item with the specified id.
+    If it exists, it deletes that item from the database, commits the changes, and returns a 204 No Content status code to indicate that the deletion was successful.
+    If the specified id does not exist in the database, it raises a 404 Not Found HTTP exception.
+
+    """
+    todo_model = db.query(Todos).filter(Todos.id == todo_id).first()
+    if todo_model is None:
+        raise HTTPException(status_code=404, detail=f'Todo with id {todo_id} not found')
+    db.query(Todos).filter(Todos.id == todo_id).delete()
+    db.commit()
