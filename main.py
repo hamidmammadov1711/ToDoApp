@@ -89,3 +89,27 @@ def create_todo(db: db_dependency, todo_request: TodoRequest):
     db.commit()
     db.refresh(todo_model)
     return todo_model
+
+
+@app.put("/todo/{id}", status_code=status.HTTP_204_NO_CONTENT)
+def update_todo(db: db_dependency,
+                todo_request: TodoRequest,
+                id: int = Path(gt=0)):
+    """
+    This function is an endpoint for updating an existing todo item in the database. It takes in a database session, the id of the todo item to be updated, and the new data for the todo item in the form of a TodoRequest object. The function first queries the database to find the existing todo item with the specified id. If it exists, it updates the fields of that item with the new data provided in the TodoRequest object, commits the changes to the database, and returns a 204 No Content status code to indicate that the update was successful. If the specified id does not exist in the database, it raises a 404 Not Found HTTP exception.
+
+    :param db: A database session provided by the get_db dependency.
+    :param id: The unique identifier of the todo item to be updated, extracted from the URL path.
+    :param todo_request: An instance of TodoRequest containing the new data for the todo item.
+    :return: A 204 No Content status code if the update is successful, or a 404 Not Found error if the specified id does not exist in the database.
+    """
+    todo_model = db.query(Todos).filter(Todos.id == id).first()
+    if todo_model is not None:
+        todo_model.title = todo_request.title
+        todo_model.description = todo_request.description
+        todo_model.priority = todo_request.priority
+        todo_model.complete = todo_request.complete
+        db.add(todo_model)
+        db.commit()
+        return
+    raise HTTPException(status_code=404, detail=f'Todo with id {id} not found')

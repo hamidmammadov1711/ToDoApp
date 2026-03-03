@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="refactor database and model imports for consistency and clarity">
+    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="add TodoRequest model and create_todo endpoint for managing todo items">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -80,6 +80,8 @@
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;ai.playground.ignore.import.keys.banner.in.settings&quot;: &quot;true&quot;,
+    &quot;database.data.extractors.current.export.id&quot;: &quot;Comma-separated (CSV)_id&quot;,
+    &quot;database.data.extractors.current.id&quot;: &quot;Comma-separated (CSV)_id&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/ToDoApp&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -126,7 +128,11 @@
       <workItem from="1772290461294" duration="2352000" />
       <workItem from="1772293764500" duration="4913000" />
       <workItem from="1772335341782" duration="2089000" />
-      <workItem from="1772364802199" duration="6182000" />
+      <workItem from="1772364802199" duration="6504000" />
+      <workItem from="1772420630376" duration="1909000" />
+      <workItem from="1772447109119" duration="3538000" />
+      <workItem from="1772455376286" duration="1505000" />
+      <workItem from="1772458070420" duration="605000" />
     </task>
     <task id="LOCAL-00001" summary="initialize project structure with database models and configuration files">
       <option name="closed" value="true" />
@@ -181,7 +187,8 @@
     <MESSAGE value="initialize project structure with database models and configuration files" />
     <MESSAGE value="update workspace configuration and recent branches for project structure" />
     <MESSAGE value="refactor database and model imports for consistency and clarity" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor database and model imports for consistency and clarity" />
+    <MESSAGE value="add TodoRequest model and create_todo endpoint for managing todo items" />
+    <option name="LAST_COMMIT_MESSAGE" value="add TodoRequest model and create_todo endpoint for managing todo items" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
