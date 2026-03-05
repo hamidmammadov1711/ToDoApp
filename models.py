@@ -4,8 +4,9 @@ from database import Base
 
 
 class Todos(Base):
-    '''This class defines a SQLAlchemy model for a "Todos" table in a database.
-        It inherits from the Base class, which is a declarative base provided by SQLAlchemy.
+    '''
+    This class defines a SQLAlchemy model for a "Todos" table in a database.
+    It inherits from the Base class, which is a declarative base provided by SQLAlchemy.
     '''
     __tablename__ = "todos"
 
