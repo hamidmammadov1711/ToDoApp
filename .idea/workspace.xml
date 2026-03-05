@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="add TodoRequest model and create_todo endpoint for managing todo items">
+    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -133,7 +133,9 @@
       <workItem from="1772447109119" duration="3538000" />
       <workItem from="1772455376286" duration="1505000" />
       <workItem from="1772458070420" duration="605000" />
-      <workItem from="1772558495591" duration="5788000" />
+      <workItem from="1772558495591" duration="6183000" />
+      <workItem from="1772639228190" duration="423000" />
+      <workItem from="1772694710851" duration="5216000" />
     </task>
     <task id="LOCAL-00001" summary="initialize project structure with database models and configuration files">
       <option name="closed" value="true" />
@@ -167,7 +169,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772365548780</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="add delete_todo endpoint for removing todo items from the database">
+      <option name="closed" value="true" />
+      <created>1772569864449</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1772569864450</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -189,7 +199,8 @@
     <MESSAGE value="update workspace configuration and recent branches for project structure" />
     <MESSAGE value="refactor database and model imports for consistency and clarity" />
     <MESSAGE value="add TodoRequest model and create_todo endpoint for managing todo items" />
-    <option name="LAST_COMMIT_MESSAGE" value="add TodoRequest model and create_todo endpoint for managing todo items" />
+    <MESSAGE value="add delete_todo endpoint for removing todo items from the database" />
+    <option name="LAST_COMMIT_MESSAGE" value="add delete_todo endpoint for removing todo items from the database" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
