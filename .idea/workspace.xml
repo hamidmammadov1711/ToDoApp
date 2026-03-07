@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="refactor main.py to include routers and remove unused code" />
+    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="add authentication and todos endpoints with database integration">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,6 +28,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {}
+}</component>
   <component name="GitToolBoxStore">
     <option name="largeFiles">
       <LargeFiles>
@@ -59,6 +65,12 @@
       </RecentBranches>
     </option>
   </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/hamidmammadov1711/ToDoApp.git&quot;,
+    &quot;accountId&quot;: &quot;81032c43-7889-4fe6-8330-1965de84eed5&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -132,7 +144,9 @@
       <workItem from="1772458070420" duration="605000" />
       <workItem from="1772558495591" duration="6183000" />
       <workItem from="1772639228190" duration="423000" />
-      <workItem from="1772694710851" duration="6631000" />
+      <workItem from="1772694710851" duration="8736000" />
+      <workItem from="1772779594994" duration="6746000" />
+      <workItem from="1772793972027" duration="891000" />
     </task>
     <task id="LOCAL-00001" summary="initialize project structure with database models and configuration files">
       <option name="closed" value="true" />
@@ -193,20 +207,34 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CODE_SMELLS_PROFILE" value="Project Default" />
     <MESSAGE value="initialize project structure with database models and configuration files" />
     <MESSAGE value="update workspace configuration and recent branches for project structure" />
     <MESSAGE value="refactor database and model imports for consistency and clarity" />
     <MESSAGE value="add TodoRequest model and create_todo endpoint for managing todo items" />
     <MESSAGE value="add delete_todo endpoint for removing todo items from the database" />
     <MESSAGE value="refactor main.py to include routers and remove unused code" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor main.py to include routers and remove unused code" />
+    <MESSAGE value="add authentication and todos endpoints with database integration" />
+    <option name="LAST_COMMIT_MESSAGE" value="add authentication and todos endpoints with database integration" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
