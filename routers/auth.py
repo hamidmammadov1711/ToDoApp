@@ -1,9 +1,10 @@
 from fastapi import APIRouter
+from starlette import status
 
 router = APIRouter()
 
 
-@router.get("/login")
+@router.get("/login", status_code=status.HTTP_200_OK)
 def get_user():
     """
         This function is a placeholder for a login endpoint.
