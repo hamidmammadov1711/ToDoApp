@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="add authentication and todos endpoints with database integration">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="add authentication and todos endpoints with database integration" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +14,11 @@
     <persistenceIdMap>
       <entry key="_D:/ToDoApp" value="3AGSOF2cKAWSKu3cmvhDolnbYfj" />
     </persistenceIdMap>
+  </component>
+  <component name="CopilotUserSelectedModel">
+    <selectedModels>
+      <entry key="edit-panel" value="Claude Haiku 4.5" />
+    </selectedModels>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -147,6 +149,7 @@
       <workItem from="1772694710851" duration="8736000" />
       <workItem from="1772779594994" duration="6746000" />
       <workItem from="1772793972027" duration="891000" />
+      <workItem from="1772877699470" duration="727000" />
     </task>
     <task id="LOCAL-00001" summary="initialize project structure with database models and configuration files">
       <option name="closed" value="true" />
