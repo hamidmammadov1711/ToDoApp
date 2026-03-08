@@ -1,14 +1,39 @@
 from fastapi import APIRouter
-from starlette import status
+from pydantic import BaseModel
+
+from models import Users
 
 router = APIRouter()
 
 
-@router.get("/login", status_code=status.HTTP_200_OK)
-def get_user():
+class CreateUserRequest(BaseModel):
     """
-        This function is a placeholder for a login endpoint.
-        It currently returns a simple message indicating that the login was successful.
-        In a real application    , this function would likely include logic to authenticate the user and generate a token or session for them.
+    This class defines a Pydantic model for a user request. It includes fields for username, email, first name, last name, and password.
     """
-    return {"message": "Login successful"}
+    username: str
+    email: str
+    first_name: str
+    last_name: str
+    password: str
+    role: str  # New field to specify the user's role (e.g., "admin", "user", etc.)
+
+
+@router.post("/auth")
+def create_user(create_user_request: CreateUserRequest):
+    """This function is a route handler for a POST request to the "/auth" endpoint.
+    """
+    create_user_model = Users(
+        username=create_user_request.username,
+        email=create_user_request.email,
+        first_name=create_user_request.first_name,
+        last_name=create_user_request.last_name,
+        hashed_password=create_user_request.password,
+        # In a real application, you should hash the password before storing it
+        is_active=True,
+        role=create_user_request.role
+
+    )
+
+    return create_user_model
+
+    return {"user": "authenticated"}
