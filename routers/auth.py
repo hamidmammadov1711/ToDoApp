@@ -30,7 +30,7 @@ def create_user(create_user_request: CreateUserRequest):
         email=create_user_request.email,
         first_name=create_user_request.first_name,
         last_name=create_user_request.last_name,
-        hashed_password=create_user_request.password,
+        hashed_password=bcrypt_context.hash(create_user_request.password),
         # In a real application, you should hash the password before storing it
         is_active=True,
         role=create_user_request.role
