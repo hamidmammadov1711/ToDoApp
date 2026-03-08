@@ -1,7 +1,9 @@
 from fastapi import APIRouter
 from passlib.context import CryptContext
 from pydantic import BaseModel
+from starlette import status
 
+from dependencies import db_dependency
 from models import Users
 
 router = APIRouter()
@@ -21,9 +23,11 @@ class CreateUserRequest(BaseModel):
     role: str  # New field to specify the user's role (e.g., "admin", "user", etc.)
 
 
-@router.post("/auth")
-def create_user(create_user_request: CreateUserRequest):
-    """This function is a route handler for a POST request to the "/auth" endpoint.
+@router.post("/auth", status_code=status.HTTP_201_CREATED)
+def create_user(db: db_dependency,
+                create_user_request: CreateUserRequest):
+    """
+        This function is a route handler for a POST request to the "/auth" endpoint.
     """
     create_user_model = Users(
         username=create_user_request.username,
@@ -37,6 +41,7 @@ def create_user(create_user_request: CreateUserRequest):
 
     )
 
-    return create_user_model
+    db.add(create_user_model)
+    db.commit()
 
     return {"user": "authenticated"}
