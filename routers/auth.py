@@ -43,5 +43,4 @@ def create_user(db: db_dependency,
 
     db.add(create_user_model)
     db.commit()
-
-    return {"user": "authenticated"}
+    return {"message": "User created successfully"}
