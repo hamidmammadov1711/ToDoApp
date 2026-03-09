@@ -59,7 +59,7 @@ def create_user(db: db_dependency,
     return {"message": "User created successfully"}
 
 
-@router.post("/token")
+@router.post("/token", response_model=TokenResponse)
 def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
                            db: db_dependency):
     """
@@ -72,7 +72,7 @@ def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depen
 
     token = create_access_token(user.username, user.id, timedelta(minutes=20))
 
-    return token
+    return {"access_token": token, "token_type": "bearer"}
 
 
 def create_access_token(usename: str, user_id: int, expires_delta: timedelta):
