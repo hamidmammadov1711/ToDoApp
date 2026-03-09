@@ -1,7 +1,9 @@
+from datetime import timedelta, datetime, timezone
 from typing import Annotated
 
 from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
+from jose import jwt
 from pydantic import BaseModel
 from starlette import status
 
@@ -10,6 +12,8 @@ from models import Users
 
 router = APIRouter()
 
+SECRET_KEY = "aca941568b42e4f2d92ccd8c4d672b0cfe1e7f8fc954d7277f36f1cf89921dbf"  # In a real application, use a secure method to store and access this key
+ALGORITHM = "HS256"
 
 
 class CreateUserRequest(BaseModel):
@@ -22,6 +26,14 @@ class CreateUserRequest(BaseModel):
     last_name: str
     password: str
     role: str  # New field to specify the user's role (e.g., "admin", "user", etc.)
+
+
+class TokenResponse(BaseModel):
+    """
+    This class defines a Pydantic model for a token response. It includes fields for the access token and the token type.
+    """
+    access_token: str
+    token_type: str
 
 
 @router.post("/auth", status_code=status.HTTP_201_CREATED)
@@ -58,4 +70,18 @@ def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depen
     if not user:
         return {'Failed Authentication': 'Invalid username or password'}
 
-    return {'Successful Authentication'}
+    token = create_access_token(user.username, user.id, timedelta(minutes=20))
+
+    return token
+
+
+def create_access_token(usename: str, user_id: int, expires_delta: timedelta):
+    """
+        This function is a placeholder for a function that would create an access token (e.g., JWT) for authenticated users.
+        In a real application, you would implement logic to generate a token that includes user information and an expiration time, and then return this token to the client for use in subsequent authenticated requests.
+    """
+    encode = {"sub": usename, "user_id": user_id}
+    expires = datetime.now(timezone.utc) + expires_delta
+    encode.update({"exp": expires})
+    # Here you would use a library like PyJWT to encode the token with the SECRET_KEY
+    return jwt.encode(encode, SECRET_KEY, algorithm=ALGORITHM)

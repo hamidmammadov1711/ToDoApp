@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="update user creation response message for clarity">
-      <change afterPath="$PROJECT_DIR$/test_imports.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/verify_fix.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ToDoApp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ToDoApp.iml" afterDir="false" />
+    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="implement user authentication and token generation endpoints">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/dependencies.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routers/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/auth.py" afterDir="false" />
@@ -206,7 +203,7 @@
       <workItem from="1772891497774" duration="4988000" />
       <workItem from="1772959248380" duration="8461000" />
       <workItem from="1772996538955" duration="7000" />
-      <workItem from="1773030158971" duration="8189000" />
+      <workItem from="1773030158971" duration="15818000" />
     </task>
     <task id="LOCAL-00001" summary="initialize project structure with database models and configuration files">
       <option name="closed" value="true" />
@@ -304,7 +301,31 @@
       <option name="project" value="LOCAL" />
       <updated>1772969135295</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="implement user authentication and token generation endpoints">
+      <option name="closed" value="true" />
+      <created>1773058550080</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1773058550080</updated>
+    </task>
+    <task id="LOCAL-00014" summary="implement user authentication and token generation endpoints">
+      <option name="closed" value="true" />
+      <created>1773058587030</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1773058587030</updated>
+    </task>
+    <task id="LOCAL-00015" summary="implement user authentication and token generation endpoints">
+      <option name="closed" value="true" />
+      <created>1773058595140</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1773058595140</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -347,7 +368,8 @@
     <MESSAGE value="hashing password create_user metod" />
     <MESSAGE value="dependencies inject auth module for post users" />
     <MESSAGE value="update user creation response message for clarity" />
-    <option name="LAST_COMMIT_MESSAGE" value="update user creation response message for clarity" />
+    <MESSAGE value="implement user authentication and token generation endpoints" />
+    <option name="LAST_COMMIT_MESSAGE" value="implement user authentication and token generation endpoints" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
