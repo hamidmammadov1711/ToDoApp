@@ -1,14 +1,15 @@
-from fastapi import APIRouter
-from passlib.context import CryptContext
+from typing import Annotated
+
+from fastapi import APIRouter, Depends
+from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import BaseModel
 from starlette import status
 
-from dependencies import db_dependency
+from dependencies import db_dependency, authenticate_user, bcrypt_context
 from models import Users
 
 router = APIRouter()
 
-bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 class CreateUserRequest(BaseModel):
@@ -44,3 +45,17 @@ def create_user(db: db_dependency,
     db.add(create_user_model)
     db.commit()
     return {"message": "User created successfully"}
+
+
+@router.post("/token")
+def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+                           db: db_dependency):
+    """
+        This function is a placeholder for a route handler that would handle user login and token generation.
+        In a real application, you would implement logic to authenticate the user, verify their credentials, and generate a JWT or similar token for access control.
+    """
+    user = authenticate_user(form_data.username, form_data.password, db)
+    if not user:
+        return {'Failed Authentication': 'Invalid username or password'}
+
+    return {'Successful Authentication'}
