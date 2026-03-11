@@ -1,20 +1,24 @@
 from datetime import timedelta, datetime, timezone
 from typing import Annotated
+import os
+from dotenv import load_dotenv
 
 from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from jose import jwt
 from pydantic import BaseModel
 from starlette import status
-
 from dependencies import db_dependency, authenticate_user, bcrypt_context
 from models import Users
 
+# Load environment variables from .env file
+load_dotenv()
+
+# Retrieve SECRET_KEY and ALGORITHM from environment variables
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM")
+
 router = APIRouter()
-
-SECRET_KEY = "aca941568b42e4f2d92ccd8c4d672b0cfe1e7f8fc954d7277f36f1cf89921dbf"  # In a real application, use a secure method to store and access this key
-ALGORITHM = "HS256"
-
 
 class CreateUserRequest(BaseModel):
     """
