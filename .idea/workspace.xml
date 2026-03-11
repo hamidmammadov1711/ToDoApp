@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="load environment variables for secret key and algorithm in authentication">
+    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test_jwt.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/dependencies.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/auth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/todos.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/todos.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +28,9 @@
       <entry key="chat-panel" value="GPT-4o" />
       <entry key="agent-panel" value="GPT-4o" />
     </selectedModels>
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -122,7 +128,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -209,7 +215,11 @@
       <workItem from="1773068270814" duration="527000" />
       <workItem from="1773080440504" duration="4000" />
       <workItem from="1773086629009" duration="163000" />
-      <workItem from="1773230612219" duration="2626000" />
+      <workItem from="1773230612219" duration="7697000" />
+      <workItem from="1773244324879" duration="278000" />
+      <workItem from="1773244640541" duration="353000" />
+      <workItem from="1773245028619" duration="45000" />
+      <workItem from="1773252516524" duration="5568000" />
     </task>
     <task id="LOCAL-00001" summary="initialize project structure with database models and configuration files">
       <option name="closed" value="true" />
@@ -379,7 +389,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773232870846</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="load environment variables from .env &#10;SQLALCHEMY_DATABASE_URL = os.getenv(&quot;DATABASE_URL&quot;)&#10;database.py">
+      <option name="closed" value="true" />
+      <created>1773233365202</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1773233365202</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -427,7 +445,8 @@
     <MESSAGE value="update token response format to include token type" />
     <MESSAGE value="update token response format to return user object on successful authentication" />
     <MESSAGE value="load environment variables for secret key and algorithm in authentication" />
-    <option name="LAST_COMMIT_MESSAGE" value="load environment variables for secret key and algorithm in authentication" />
+    <MESSAGE value="load environment variables from .env &#10;SQLALCHEMY_DATABASE_URL = os.getenv(&quot;DATABASE_URL&quot;)&#10;database.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="load environment variables from .env &#10;SQLALCHEMY_DATABASE_URL = os.getenv(&quot;DATABASE_URL&quot;)&#10;database.py" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
