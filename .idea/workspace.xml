@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="add JWT token generation for user authentication">
+    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="update token response format to include token type">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/dependencies.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/auth.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_imports.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_imports.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/verify_fix.py" beforeDir="false" afterPath="$PROJECT_DIR$/verify_fix.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,6 +205,8 @@
       <workItem from="1773030158971" duration="16186000" />
       <workItem from="1773068270814" duration="527000" />
       <workItem from="1773080440504" duration="4000" />
+      <workItem from="1773086629009" duration="163000" />
+      <workItem from="1773230612219" duration="563000" />
     </task>
     <task id="LOCAL-00001" summary="initialize project structure with database models and configuration files">
       <option name="closed" value="true" />
@@ -337,7 +336,23 @@
       <option name="project" value="LOCAL" />
       <updated>1773068058998</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="update token response format to include token type">
+      <option name="closed" value="true" />
+      <created>1773086681904</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1773086681905</updated>
+    </task>
+    <task id="LOCAL-00018" summary="update token response format to include token type">
+      <option name="closed" value="true" />
+      <created>1773086692270</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1773086692270</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -382,7 +397,8 @@
     <MESSAGE value="update user creation response message for clarity" />
     <MESSAGE value="implement user authentication and token generation endpoints" />
     <MESSAGE value="add JWT token generation for user authentication" />
-    <option name="LAST_COMMIT_MESSAGE" value="add JWT token generation for user authentication" />
+    <MESSAGE value="update token response format to include token type" />
+    <option name="LAST_COMMIT_MESSAGE" value="update token response format to include token type" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

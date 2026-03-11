@@ -40,4 +40,4 @@ def authenticate_user(username: str, password: str, db):
     # Here you would add logic to verify the password, e.g., using bcrypt to compare the hashed password
     if not bcrypt_context.verify(password, user.hashed_password):
         return False
-    return True
+    return user
