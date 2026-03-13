@@ -25,8 +25,7 @@ def read_all(user: user_dependency, db: db_dependency):
     :param db:
     :return:
     """
-    if user is None:
-        raise HTTPException(status_code=401, detail="Authentication Failed")
+
     # İndi tapşırıqları yalnız 'owner_id' istifadəçinin ID-sinə bərabər olanlarla filtrləyirik
     return db.query(Todos).filter(Todos.owner_id == user.id).all()
 
@@ -41,8 +40,7 @@ def read_todo(user: user_dependency, db: db_dependency,
     :param todo_id:
     :return:
     """
-    if user is None:
-        raise HTTPException(status_code=401, detail="Authentication Failed")
+
     # Tapşırığı taparkən həm id-ni, həm də owner_id-ni yoxlayırıq
     todo_model = (db.query(Todos).filter(Todos.id == todo_id)
                   .filter(Todos.owner_id == user.id).first())
@@ -61,8 +59,6 @@ def create_todo(user: user_dependency,
     :param db:
     :param todo_request:
     """
-    if user is None:
-        raise HTTPException(status_code=401, detail="Authentication Failed")
 
     # owner_id sahəsini istifadəçidən gələn ID ilə doldururuq
     todo_model = Todos(**todo_request.model_dump(), owner_id=user.id)
@@ -79,13 +75,13 @@ def update_todo(user: user_dependency,
                 todo_request: TodoRequest,
                 todo_id: int = Path(gt=0)):  # 'id' əvəzinə 'todo_id'
     """
-
     :param user:
     :param db:
     :param todo_request:
     :param todo_id:
     :return:
     """
+
     # Artıq 'id' açar sözü ilə qarışıqlıq yoxdur
     todo_model = (db.query(Todos).filter(Todos.id == todo_id)
                   .filter(Todos.owner_id == user.id).first())
@@ -112,8 +108,6 @@ def delete_todo(user: user_dependency, db: db_dependency,
     :param db:
     :param todo_id:
     """
-    if user is None:
-        raise HTTPException(status_code=401, detail="Authentication Failed")
 
     # Tapşırığı taparkən həm id-ni, həm də owner_id-ni yoxlayırıq
     todo_model = (db.query(Todos).filter(Todos.id == todo_id)

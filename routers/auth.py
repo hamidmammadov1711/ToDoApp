@@ -19,7 +19,7 @@ from models import Users
 
 router = APIRouter(
     prefix='/auth',
-    tags=['auth']
+    tags=['🔐 auth']
 )
 
 
@@ -39,6 +39,12 @@ class TokenResponse(BaseModel):
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def create_user(db: db_dependency, create_user_request: CreateUserRequest):
+    """
+
+    :param db:
+    :param create_user_request:
+    :return:
+    """
     create_user_model = Users(
         username=create_user_request.username,
         email=create_user_request.email,
@@ -56,6 +62,12 @@ def create_user(db: db_dependency, create_user_request: CreateUserRequest):
 @router.post("/token", response_model=TokenResponse)
 def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
                            db: db_dependency):
+    """
+
+    :param form_data:
+    :param db:
+    :return:
+    """
     user = authenticate_user(form_data.username, form_data.password, db)
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
@@ -67,6 +79,13 @@ def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depen
 
 
 def create_access_token(username: str, user_id: int, expires_delta: timedelta):
+    """
+
+    :param username:
+    :param user_id:
+    :param expires_delta:
+    :return:
+    """
     encode = {"sub": username, "user_id": user_id}
     expires = datetime.now(timezone.utc) + expires_delta
     encode.update({"exp": expires})

@@ -20,6 +20,9 @@ bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 def get_db():
+    """
+    get_db funksiyası, SQLAlchemy sessiyasını yaratmaq və idarə etmək üçün istifadə olunur. Bu funksiya, FastAPI-nin Depends funksiyası ilə birlikdə istifadə edilərək, hər bir API endpointində verilənlər bazası sessiyasını təmin edir. Sessiya yaradıldıqdan sonra, bu sessiya yield edilir və endpoint işlədikdən sonra sessiya avtomatik olaraq bağlanır.
+    """
     db = session_local()
     try:
         yield db
@@ -32,6 +35,12 @@ db_dependency = Annotated[Session, Depends(get_db)]
 
 # authenticate_user funksiyasını bura köçürürük ki, həm auth.py, həm də digər yerlərdə istifadə edə bilək
 def authenticate_user(username: str, password: str, db: Session):
+    """
+    :param username:
+    :param password:
+    :param db:
+    :return:
+    """
     user = db.query(Users).filter(Users.username == username).first()
     if not user or not bcrypt_context.verify(password, user.hashed_password):
         return False
