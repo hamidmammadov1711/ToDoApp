@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="fix: create new admin module">
+    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="fix: create new admin module new features">
       <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routers/users.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/auth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -219,7 +219,10 @@
       <workItem from="1773245028619" duration="45000" />
       <workItem from="1773252516524" duration="6755000" />
       <workItem from="1773356680802" duration="6386000" />
-      <workItem from="1773400323969" duration="9449000" />
+      <workItem from="1773400323969" duration="9840000" />
+      <workItem from="1773426103219" duration="7000" />
+      <workItem from="1773426150823" duration="4000" />
+      <workItem from="1773427513421" duration="4940000" />
     </task>
     <task id="LOCAL-00001" summary="initialize project structure with database models and configuration files">
       <option name="closed" value="true" />
@@ -461,7 +464,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773405898308</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="fix: create new admin module new features">
+      <option name="closed" value="true" />
+      <created>1773412766927</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1773412766927</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -492,7 +503,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CODE_SMELLS_PROFILE" value="Project Default" />
-    <MESSAGE value="update workspace configuration and recent branches for project structure" />
     <MESSAGE value="refactor database and model imports for consistency and clarity" />
     <MESSAGE value="add TodoRequest model and create_todo endpoint for managing todo items" />
     <MESSAGE value="add delete_todo endpoint for removing todo items from the database" />
@@ -517,7 +527,8 @@
     <MESSAGE value="fix: resolve user attribute errors and type warnings&#10;&#10;- Fix AttributeError by accessing user.id instead of user.get()&#10;- Update JWT payload to use Any type for datetime compatibility&#10;- Add type hinting and casting for user authentication" />
     <MESSAGE value="fix: add role verification to current user dependency" />
     <MESSAGE value="fix: create new admin module" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: create new admin module" />
+    <MESSAGE value="fix: create new admin module new features" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: create new admin module new features" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
