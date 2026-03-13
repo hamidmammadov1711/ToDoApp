@@ -1,3 +1,4 @@
+"""Bu modul, FastAPI istifadə edərək "admin" roluna sahib istifadəçilər üçün xüsusi endpointləri tanımlar. Bu endpointler, yalnız admin" roluna sahip kullanıcıların erişebileceği işlemleri içerir. Örneğin, tüm tapşırıqları (todos) görüntüleme ve belirli bir tapşırığı silme gibi işlemler bu modül altında tanımlanır. Endpointler, kullanıcıların yetkilerini kontrol eder ve uygun HTTP durum kodları ile yanıt verir."""
 from fastapi import APIRouter, HTTPException, Path
 from starlette import status
 
@@ -6,7 +7,7 @@ from models import Todos
 
 router = APIRouter(
     prefix='/admin',
-    tags=['👑 admin']
+    tags=['🐱‍👤 admin']
 )
 
 
@@ -18,27 +19,34 @@ def read_all_todos(user: user_dependency, db: db_dependency):
     :param db: Verilənlər bazası sessiyası.
     :return: Bütün tapşırıqların siyahısı və ya bir xəta mesajı.
     """
-    if user.role != "admin":
+    if user is None or user.role.lower() != "admin":
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                             detail="You do not have permission to access this resource")
     return db.query(Todos).all()
 
 
 @router.delete("/todo/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_todo_by_admin(user: user_dependency, db: db_dependency, todo_id: int = Path(gt=0)):
+def delete_todo_by_admin(user: user_dependency,
+                         db: db_dependency,
+                         todo_id: int = Path(gt=0)):
     """
 
     :param user:
     :param db:
     :param todo_id:
     """
+    # 1. İlk öncə icazəni yoxlayırıq
     if user.role.lower() != "admin":
-        raise HTTPException(status_code=403, detail="Admin access required")
+        raise HTTPException(status_code=status.HTTP_401_FORBIDDEN,
+                            detail="Admin access required")
 
+    # 2. Tapşırığı tapırıq (sahibindən asılı olmayaraq)
     todo_model = db.query(Todos).filter(Todos.id == todo_id).first()
 
+    # 3. Tapşırıq mövcud deyilsə xəta veririk
     if todo_model is None:
         raise HTTPException(status_code=404, detail="Todo not found")
 
-    db.delete(todo_model)
+    # 4. Silirik və bazanı commit edirik
+    db.query(Todos).filter(Todos.id == todo_id).delete()
     db.commit()
