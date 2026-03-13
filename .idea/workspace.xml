@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="fix: resolve user attribute errors and type warnings&#10;&#10;- Fix AttributeError by accessing user.id instead of user.get()&#10;- Update JWT payload to use Any type for datetime compatibility&#10;- Add type hinting and casting for user authentication">
+    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="fix: add role verification to current user dependency">
       <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routers/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/dependencies.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/auth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -219,7 +219,7 @@
       <workItem from="1773245028619" duration="45000" />
       <workItem from="1773252516524" duration="6755000" />
       <workItem from="1773356680802" duration="6386000" />
-      <workItem from="1773400323969" duration="4216000" />
+      <workItem from="1773400323969" duration="5404000" />
     </task>
     <task id="LOCAL-00001" summary="initialize project structure with database models and configuration files">
       <option name="closed" value="true" />
@@ -445,7 +445,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773402993040</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="fix: add role verification to current user dependency">
+      <option name="closed" value="true" />
+      <created>1773404634126</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1773404634126</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -500,7 +508,8 @@
     <MESSAGE value="fix: secure todo endpoints and new endpoint read_todo() for search by todo_id and owner_id" />
     <MESSAGE value="fix: clean code principies for auth and todos modules" />
     <MESSAGE value="fix: resolve user attribute errors and type warnings&#10;&#10;- Fix AttributeError by accessing user.id instead of user.get()&#10;- Update JWT payload to use Any type for datetime compatibility&#10;- Add type hinting and casting for user authentication" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: resolve user attribute errors and type warnings&#10;&#10;- Fix AttributeError by accessing user.id instead of user.get()&#10;- Update JWT payload to use Any type for datetime compatibility&#10;- Add type hinting and casting for user authentication" />
+    <MESSAGE value="fix: add role verification to current user dependency" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: add role verification to current user dependency" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
