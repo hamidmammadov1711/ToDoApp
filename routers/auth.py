@@ -77,19 +77,20 @@ def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depen
                             detail="Could not validate credentials")
 
     # expires_delta-nı düzgün ötürün
-    token = create_access_token(user.username, user.id, timedelta(minutes=20))
+    token = create_access_token(user.username, user.id, user.role, timedelta(minutes=20))
     return {"access_token": token, "token_type": "bearer"}
 
 
-def create_access_token(username: str, user_id: int, expires_delta: timedelta):
+def create_access_token(username: str, user_id: int, role: str, expires_delta: timedelta):
     """
 
     :param username:
     :param user_id:
+    :param role:
     :param expires_delta:
     :return:
     """
-    encode: dict[str, Any] = {"sub": username, "user_id": user_id}
+    encode: dict[str, Any] = {"sub": username, "user_id": user_id, "role": role}
     expires = datetime.now(timezone.utc) + expires_delta
     encode.update({"exp": expires})
     return jwt.encode(encode, SECRET_KEY, algorithm=ALGORITHM)

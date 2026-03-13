@@ -53,20 +53,32 @@ def authenticate_user(username: str, password: str, db: Session):
 def get_current_user(token: Annotated[str, Depends(oauth2_bearer)],
                      db: Session = Depends(get_db)):
     """
-    get_current_user funksiyası, istifadəçinin tokenini yoxlayaraq, onun məlumatlarını əldə etmək üçün istifadə olunur. Bu funksiya, tokeni decode edərək istifadəçi ID-sini çıxarır və sonra bu ID ilə verilənlər bazasından istifadəçi məlumatlarını əldə edir. Əgər token düzgün deyilsə və ya istifadəçi tapılmazsa, müvafiq HTTPException atılır.
+
+    :param token:
+    :param db:
+    :return:
     """
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        user_id: int = payload.get("user_id")
-        if user_id is None:
+        username: str = payload.get("sub")
+        user_id: int = payload.get("user_id")  # auth.py-də 'user_id' olaraq qeyd etmisiniz
+        user_role: str = payload.get("role")
+
+        if username is None or user_id is None:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                                 detail="Could not validate credentials")
-        user = db.query(Users).filter(Users.id == user_id).first()
+
+        # Query daxilində həm ID-ni, həm də ROL-u yoxlayırıq
+        user = db.query(Users).filter(Users.id == user_id) \
+            .filter(Users.role == user_role).first()
+
         if user is None:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                                detail="User not found or role mismatch")
         return user
     except JWTError:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail="Could not validate credentials")
 
 
 user_dependency = Annotated[Users, Depends(get_current_user)]
