@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="fixed: validation language of test_jwt.py file">
+    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="fix: secure todo endpoints and resolve circular imports">
       <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/dependencies.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/todos.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/todos.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -215,7 +217,8 @@
       <workItem from="1773244324879" duration="278000" />
       <workItem from="1773244640541" duration="353000" />
       <workItem from="1773245028619" duration="45000" />
-      <workItem from="1773252516524" duration="6494000" />
+      <workItem from="1773252516524" duration="6755000" />
+      <workItem from="1773356680802" duration="3697000" />
     </task>
     <task id="LOCAL-00001" summary="initialize project structure with database models and configuration files">
       <option name="closed" value="true" />
@@ -409,7 +412,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773258557599</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="fix: secure todo endpoints and resolve circular imports">
+      <option name="closed" value="true" />
+      <created>1773259127033</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1773259127033</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -460,7 +471,8 @@
     <MESSAGE value="load environment variables from .env &#10;SQLALCHEMY_DATABASE_URL = os.getenv(&quot;DATABASE_URL&quot;)&#10;database.py" />
     <MESSAGE value="fix: improve auth security and fix circular imports in todo routes&#10;refactor: update authentication flow and secure todo endpoints with owner_id filtering" />
     <MESSAGE value="fixed: validation language of test_jwt.py file" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed: validation language of test_jwt.py file" />
+    <MESSAGE value="fix: secure todo endpoints and resolve circular imports" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: secure todo endpoints and resolve circular imports" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

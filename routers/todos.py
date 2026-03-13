@@ -1,3 +1,5 @@
+"""Bu kod parçacığı, FastAPI istifadə edərək bir "Todo" tətbiqinin API marşrutlarını təyin edir. Bu marşrutlar, istifadəçi doğrulaması və verilənlər bazası əməliyyatları ilə birlikdə CRUD (Yarat, Oxu, Yenilə, Sil) əməliyyatlarını həyata keçirir. Hər bir marşrut, istifadəçinin yalnız öz tapşırıqlarını görməsini və idarə etməsini təmin etmək üçün "owner_id" sahəsini yoxlayır."""
+
 from fastapi import APIRouter, HTTPException, Path
 from pydantic import BaseModel, Field
 from starlette import status
@@ -9,13 +11,6 @@ router = APIRouter()
 
 
 class TodoRequest(BaseModel):
-    """
-     This class defines a Pydantic model for a todo request. It includes fields for title, description, priority, and complete status.
-     The title field is a string that represents the title of the todo item.
-     The description field is a string that provides additional details about the todo item.
-     The priority field is an integer that indicates the priority level of the todo item.
-     The complete field is a boolean that indicates whether the todo item is completed or not, with a default value of False.
-    """
     title: str = Field(min_length=3)
     description: str = Field(min_length=3, max_length=100)
     priority: int = Field(gt=0, lt=6)
@@ -24,12 +19,48 @@ class TodoRequest(BaseModel):
 
 @router.get("/", status_code=status.HTTP_200_OK)
 def read_all(user: user_dependency, db: db_dependency):
+    """
+
+    :param user:
+    :param db:
+    :return:
+    """
+    if user is None:
+        raise HTTPException(status_code=401, detail="Authentication Failed")
     # İndi tapşırıqları yalnız 'owner_id' istifadəçinin ID-sinə bərabər olanlarla filtrləyirik
     return db.query(Todos).filter(Todos.owner_id == user.id).all()
 
 
+@router.get("/todo/{todo_id}", status_code=status.HTTP_200_OK)
+def read_todo(user: user_dependency, db: db_dependency,
+              todo_id: int = Path(gt=0)):
+    """
+
+    :param user:
+    :param db:
+    :param todo_id:
+    :return:
+    """
+    if user is None:
+        raise HTTPException(status_code=401, detail="Authentication Failed")
+    # Tapşırığı taparkən həm id-ni, həm də owner_id-ni yoxlayırıq
+    todo_model = (db.query(Todos).filter(Todos.id == todo_id)
+                  .filter(Todos.owner_id == user.id).first())
+    if todo_model is not None:
+        return todo_model
+    raise HTTPException(status_code=404, detail='Todo not found')
+
+
 @router.post("/todo", status_code=status.HTTP_201_CREATED)
-def create_todo(user: user_dependency, db: db_dependency, todo_request: TodoRequest):
+def create_todo(user: user_dependency,
+                db: db_dependency,
+                todo_request: TodoRequest):
+    """
+
+    :param user:
+    :param db:
+    :param todo_request:
+    """
     if user is None:
         raise HTTPException(status_code=401, detail="Authentication Failed")
 
@@ -47,7 +78,14 @@ def update_todo(user: user_dependency,
                 db: db_dependency,
                 todo_request: TodoRequest,
                 todo_id: int = Path(gt=0)):  # 'id' əvəzinə 'todo_id'
+    """
 
+    :param user:
+    :param db:
+    :param todo_request:
+    :param todo_id:
+    :return:
+    """
     # Artıq 'id' açar sözü ilə qarışıqlıq yoxdur
     todo_model = (db.query(Todos).filter(Todos.id == todo_id)
                   .filter(Todos.owner_id == user.id).first())
@@ -68,6 +106,12 @@ def update_todo(user: user_dependency,
 @router.delete("/todo/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_todo(user: user_dependency, db: db_dependency,
                 todo_id: int = Path(gt=0)):
+    """
+
+    :param user:
+    :param db:
+    :param todo_id:
+    """
     if user is None:
         raise HTTPException(status_code=401, detail="Authentication Failed")
 

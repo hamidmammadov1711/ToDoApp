@@ -30,7 +30,7 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 
 
-# authenticate_user funksiyasını bura köçürün
+# authenticate_user funksiyasını bura köçürürük ki, həm auth.py, həm də digər yerlərdə istifadə edə bilək
 def authenticate_user(username: str, password: str, db: Session):
     user = db.query(Users).filter(Users.username == username).first()
     if not user or not bcrypt_context.verify(password, user.hashed_password):
@@ -38,12 +38,17 @@ def authenticate_user(username: str, password: str, db: Session):
     return user
 
 
-def get_current_user(token: Annotated[str, Depends(oauth2_bearer)], db: Session = Depends(get_db)):
+def get_current_user(token: Annotated[str, Depends(oauth2_bearer)],
+                     db: Session = Depends(get_db)):
+    """
+    get_current_user funksiyası, istifadəçinin tokenini yoxlayaraq, onun məlumatlarını əldə etmək üçün istifadə olunur. Bu funksiya, tokeni decode edərək istifadəçi ID-sini çıxarır və sonra bu ID ilə verilənlər bazasından istifadəçi məlumatlarını əldə edir. Əgər token düzgün deyilsə və ya istifadəçi tapılmazsa, müvafiq HTTPException atılır.
+    """
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         user_id: int = payload.get("user_id")
         if user_id is None:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials")
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                                detail="Could not validate credentials")
         user = db.query(Users).filter(Users.id == user_id).first()
         if user is None:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
