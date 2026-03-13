@@ -7,7 +7,10 @@ from starlette import status
 from dependencies import db_dependency, user_dependency
 from models import Todos
 
-router = APIRouter()
+router = APIRouter(
+    prefix='/todos',
+    tags=['📝 todos']
+)
 
 
 class TodoRequest(BaseModel):

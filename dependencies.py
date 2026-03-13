@@ -1,3 +1,5 @@
+"""Bu modul, FastAPI tətbiqində istifadəçi autentifikasiyası və verilənlər bazası sessiyasını idarə etmək üçün istifadə olunan funksiyaları və asılılıqları ehtiva edir. Burada, istifadəçi məlumatlarını doğrulamaq, tokenləri yoxlamaq və verilənlər bazası ilə əlaqə yaratmaq üçün lazımlı funksiyalar və asılılıqlar təyin edilir. Bu modul, tətbiqin digər hissələrində istifadə edilərək, kodun təkrarını azaltmağa və tətbiqin strukturunu daha təmiz etməyə kömək edir."""
+
 import os
 from typing import Annotated
 
@@ -42,7 +44,8 @@ def authenticate_user(username: str, password: str, db: Session):
     :return:
     """
     user = db.query(Users).filter(Users.username == username).first()
-    if not user or not bcrypt_context.verify(password, user.hashed_password):
+
+    if not user or not bcrypt_context.verify(password, str(user.hashed_password)):
         return False
     return user
 

@@ -1,5 +1,8 @@
+"""Bu modul istifadəçi qeydiyyatı və giriş üçün API endpoint-lərini təmin edir. İki əsas endpoint var:
+1. POST /auth/ - Yeni istifadəçi yaratmaq üçün istifadə olunur. İstifadəçi məlumatları (username, email, first_name, last_name, password, role) qəbul edir və verilənlər bazasına yeni bir istifadəçi əlavə edir.
+2. POST /auth/token - İstifadəçi girişini təmin etmək üçün istifadə olunur. İstifadəçi adı və şifrə qəbul edir, istifadəçi doğrulamasını həyata keçirir və uğurluqdan sonra JWT tokeni qaytarır. Bu token, istifadəçinin kimliyini təsdiqlamaq və digər endpoint-lərə giriş üçün istifadə olunur."""
 from datetime import timedelta, datetime, timezone
-from typing import Annotated
+from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
@@ -86,7 +89,7 @@ def create_access_token(username: str, user_id: int, expires_delta: timedelta):
     :param expires_delta:
     :return:
     """
-    encode = {"sub": username, "user_id": user_id}
+    encode: dict[str, Any] = {"sub": username, "user_id": user_id}
     expires = datetime.now(timezone.utc) + expires_delta
     encode.update({"exp": expires})
     return jwt.encode(encode, SECRET_KEY, algorithm=ALGORITHM)

@@ -1,3 +1,4 @@
+"""Bu modul, SQLAlchemy istifadə edərək tətbiq üçün verilənlər bazası bağlantısını və sessiya idarəetməsini qurur. Verilənlər bazası URL-ni mühit dəyişənlərindən yükləyir, mühərrik yaradır və deklarativ modellər üçün sessiya fabriki və baza sinfi təyin edir."""
 import os
 
 from dotenv import load_dotenv
