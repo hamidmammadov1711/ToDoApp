@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="fix: create new admin module new features">
+    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="fix: create new users module, get_user() and change_password() method and logic created">
       <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routers/users.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -222,7 +222,9 @@
       <workItem from="1773400323969" duration="9840000" />
       <workItem from="1773426103219" duration="7000" />
       <workItem from="1773426150823" duration="4000" />
-      <workItem from="1773427513421" duration="4940000" />
+      <workItem from="1773427513421" duration="5301000" />
+      <workItem from="1773455540387" duration="6141000" />
+      <workItem from="1773491496142" duration="1092000" />
     </task>
     <task id="LOCAL-00001" summary="initialize project structure with database models and configuration files">
       <option name="closed" value="true" />
@@ -472,7 +474,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773412766927</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="fix: create new users module, get_user() and change_password() method and logic created">
+      <option name="closed" value="true" />
+      <created>1773435411332</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1773435411333</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -503,7 +513,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CODE_SMELLS_PROFILE" value="Project Default" />
-    <MESSAGE value="refactor database and model imports for consistency and clarity" />
     <MESSAGE value="add TodoRequest model and create_todo endpoint for managing todo items" />
     <MESSAGE value="add delete_todo endpoint for removing todo items from the database" />
     <MESSAGE value="refactor main.py to include routers and remove unused code" />
@@ -528,7 +537,8 @@
     <MESSAGE value="fix: add role verification to current user dependency" />
     <MESSAGE value="fix: create new admin module" />
     <MESSAGE value="fix: create new admin module new features" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: create new admin module new features" />
+    <MESSAGE value="fix: create new users module, get_user() and change_password() method and logic created" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: create new users module, get_user() and change_password() method and logic created" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
