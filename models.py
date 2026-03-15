@@ -17,6 +17,7 @@ class Users(Base):
     role = Column(String)  # New column to store user roles (e.g., "admin", "user", etc.)
 
 
+
 class Todos(Base):
     __tablename__ = "todos"
 
