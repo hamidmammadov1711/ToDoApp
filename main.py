@@ -9,7 +9,8 @@ from routers import auth, todos, admin, users
 app = FastAPI(
     title="Todo API",
     description="Bu API, istifadəçilərin todo tapşırıqlarını idarə etmələrinə imkan verir. İstifadəçilər qeydiyyatdan keçə və daxil ola bilərlər, sonra isə öz todo tapşırıqlarını yarada, oxuya, yeniləyə və silə bilərlər. Hər bir istifadəçi yalnız öz tapşırıqlarını görə və idarə edə bilər.",
-    version="1.0.1"
+    version="1.0.1",
+    
 )
 
 models.Base.metadata.create_all(bind=engine)

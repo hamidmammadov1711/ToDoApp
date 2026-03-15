@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="fix: create new users module, get_user() and change_password() method and logic created">
+    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="fix: connect database PostgreSQL best professional bd">
       <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/dependencies.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/admin.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,6 +133,7 @@
   },
   &quot;keyToStringList&quot;: {
     &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;,
       &quot;sqlite&quot;
     ]
   }
@@ -224,7 +227,12 @@
       <workItem from="1773426150823" duration="4000" />
       <workItem from="1773427513421" duration="5301000" />
       <workItem from="1773455540387" duration="6141000" />
-      <workItem from="1773491496142" duration="1092000" />
+      <workItem from="1773491496142" duration="1907000" />
+      <workItem from="1773571302151" duration="23000" />
+      <workItem from="1773572702720" duration="3214000" />
+      <workItem from="1773576005590" duration="781000" />
+      <workItem from="1773577999784" duration="2886000" />
+      <workItem from="1773584085031" duration="1306000" />
     </task>
     <task id="LOCAL-00001" summary="initialize project structure with database models and configuration files">
       <option name="closed" value="true" />
@@ -482,7 +490,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773435411333</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="fix: connect database PostgreSQL best professional bd">
+      <option name="closed" value="true" />
+      <created>1773493836595</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1773493836596</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -513,7 +529,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CODE_SMELLS_PROFILE" value="Project Default" />
-    <MESSAGE value="add TodoRequest model and create_todo endpoint for managing todo items" />
     <MESSAGE value="add delete_todo endpoint for removing todo items from the database" />
     <MESSAGE value="refactor main.py to include routers and remove unused code" />
     <MESSAGE value="add authentication and todos endpoints with database integration" />
@@ -538,7 +553,8 @@
     <MESSAGE value="fix: create new admin module" />
     <MESSAGE value="fix: create new admin module new features" />
     <MESSAGE value="fix: create new users module, get_user() and change_password() method and logic created" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: create new users module, get_user() and change_password() method and logic created" />
+    <MESSAGE value="fix: connect database PostgreSQL best professional bd" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: connect database PostgreSQL best professional bd" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

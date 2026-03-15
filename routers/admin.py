@@ -37,7 +37,7 @@ def delete_todo_by_admin(user: user_dependency,
     """
     # 1. İlk öncə icazəni yoxlayırıq
     if user.role.lower() != "admin":
-        raise HTTPException(status_code=status.HTTP_401_FORBIDDEN,
+        raise HTTPException(status_code=403,
                             detail="Admin access required")
 
     # 2. Tapşırığı tapırıq (sahibindən asılı olmayaraq)
