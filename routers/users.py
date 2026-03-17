@@ -1,11 +1,12 @@
 """
 
 Bu kod parçası, FastAPI framework istifdə edilərək düzəldilmiş bir API router'ni təmsil edir. Bu router, istifadəçilərlə əlaqəli prosesləri idarə etmək üçün istifadə edilir. Hələlik iki ana endpoint daxil edilir: biri istifadəçi məlumatlarını almaq üçün, digəri isə istifadəçi şifrəsini dəyişdirmək üçün."""
+
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from starlette import status
 
-from dependencies import db_dependency, user_dependency, bcrypt_context
+from dependencies import db_dependency, user_dependency, verify_password, hash_password
 from models import Users
 
 router = APIRouter(
@@ -51,10 +52,29 @@ def change_password(user: user_dependency,
         raise HTTPException(status_code=401, detail="Authentication failed")
     user_model = db.query(Users).filter(Users.id == user.id).first()
 
-    if not bcrypt_context.verify(user_verification.password, str(user_model.hashed_password)):
+    if not verify_password(user_verification.password, str(user_model.hashed_password)):
         raise HTTPException(status_code=401,
                             detail="Error on password change: Incorrect current password")
 
-    user_model.hashed_password = bcrypt_context.hash(user_verification.new_password)
+    user_model.hashed_password = hash_password(user_verification.new_password)
+    db.add(user_model)
+    db.commit()
+
+
+@router.put("/phone_number/{phone_number}", status_code=status.HTTP_204_NO_CONTENT)
+def change_phone_number(user: user_dependency,
+                        db: db_dependency,
+                        new_phone_number: str):
+    """
+    Bu endpoint, istifadəçinin telefon nömrəsini dəyişdirmək üçün istifadə olunur. İstifadəçi doğrulaması tələb olunur və yalnız autentifikasiya olunmuş istifadəçilər bu endpointə daxil ola bilərlər. Endpoint, yeni telefon nömrəsini qəbul edir və verilənlər bazasında güncəlləyir.
+    :param new_phone_number:
+    :param user:
+    :param db:
+    """
+    if user is None:
+        raise HTTPException(status_code=401, detail="Authentication failed")
+    user_model = db.query(Users).filter(Users.id == user.id).first()
+
+    user_model.phone_number = new_phone_number
     db.add(user_model)
     db.commit()

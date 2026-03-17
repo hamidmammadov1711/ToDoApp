@@ -11,7 +11,6 @@ from jose import jwt
 from pydantic import BaseModel
 from starlette import status
 
-
 from dependencies import (
     db_dependency,
     authenticate_user,
@@ -29,10 +28,11 @@ router = APIRouter(
 
 class CreateUserRequest(BaseModel):
     username: str
+    password: str
     email: str
     first_name: str
     last_name: str
-    password: str
+    phone_number: str
     role: str
 
 
@@ -56,6 +56,7 @@ def create_user(db: db_dependency, create_user_request: CreateUserRequest):
         last_name=create_user_request.last_name,
         hashed_password=bcrypt_context.hash(create_user_request.password),
         is_active=True,
+        phone_number=create_user_request.phone_number,
         role=create_user_request.role
     )
     db.add(create_user_model)

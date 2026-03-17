@@ -3,6 +3,7 @@
 import os
 from typing import Annotated
 
+import bcrypt
 from dotenv import load_dotenv
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
@@ -18,7 +19,9 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = os.getenv("ALGORITHM")
 oauth2_bearer = OAuth2PasswordBearer(tokenUrl="auth/token")
 
-bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto", bcrypt__truncate_error=True)
+bcrypt_context = CryptContext(schemes=["bcrypt"],
+                              deprecated="auto",
+                              bcrypt__truncate_error=True)
 
 
 def get_db():
@@ -82,3 +85,21 @@ def get_current_user(token: Annotated[str, Depends(oauth2_bearer)],
 
 
 user_dependency = Annotated[Users, Depends(get_current_user)]
+
+
+def hash_password(password: str) -> str:
+    """ Şifrəni hashləyir"""
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
+    return hashed_password.decode('utf-8')
+
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    """Şifrəni yoxlayır"""
+    try:
+        return bcrypt.checkpw(
+            plain_password.encode('utf-8'),
+            hashed_password.encode('utf-8')
+        )
+    except Exception:
+        return False
