@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="fix: used mechanics testing for pytest">
+    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="fix: pytest going on working">
       <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test_example.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_example.py" afterDir="false" />
@@ -273,7 +273,7 @@
       <workItem from="1773662320030" duration="327000" />
       <workItem from="1773668395780" duration="4486000" />
       <workItem from="1773773811950" duration="669000" />
-      <workItem from="1773774514814" duration="3384000" />
+      <workItem from="1773774514814" duration="4247000" />
     </task>
     <task id="LOCAL-00001" summary="initialize project structure with database models and configuration files">
       <option name="closed" value="true" />
@@ -571,7 +571,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773777288168</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="fix: pytest going on working">
+      <option name="closed" value="true" />
+      <created>1773778034483</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1773778034483</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -602,7 +610,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CODE_SMELLS_PROFILE" value="Project Default" />
-    <MESSAGE value="importin dependencies passlib and bcrypt" />
     <MESSAGE value="hashing password create_user metod" />
     <MESSAGE value="dependencies inject auth module for post users" />
     <MESSAGE value="update user creation response message for clarity" />
@@ -627,7 +634,8 @@
     <MESSAGE value="fix: alembic integrated" />
     <MESSAGE value="fix: alembic integrated requirements.txt" />
     <MESSAGE value="fix: used mechanics testing for pytest" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: used mechanics testing for pytest" />
+    <MESSAGE value="fix: pytest going on working" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: pytest going on working" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ToDoApp$.coverage" NAME=" Coverage Results" MODIFIED="1773776310005" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

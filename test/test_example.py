@@ -49,12 +49,18 @@ class Student:
         self.years = years
 
 
+@pytest.fixture
+def default_employee():
+    """
+        This fixture provides a default Student instance for testing purposes.
+    :return: A Student instance with predefined attributes.
+    """
+    return Student("John", "Doe", "Computer Science", 3)
 
 
+def test_person_initialization(default_employee):
 
-def test_person_initialization():
-    student = Student("John", "Doe", "Computer Science", 3)
-    assert student.firs_name == "John", 'First name should be "John"'
-    assert student.last_name == "Doe", 'Last name should be "Doe"'
-    assert student.major == "Computer Science"
-    assert student.years == 3
+    assert default_employee.firs_name == "John", 'First name should be "John"'
+    assert default_employee.last_name == "Doe", 'Last name should be "Doe"'
+    assert default_employee.major == "Computer Science"
+    assert default_employee.years == 3
