@@ -17,6 +17,10 @@ models.Base.metadata.create_all(bind=engine)
 
 @app.get("/helathy")
 def helathy():
+    """
+    Bu endpoint API-nin sağlam olduğunu yoxlamaq üçün istifadə olunur. API işləyirsə, bu endpoint "API is healthy and running!" mesajını qaytaracaq.
+    :return: Bir JSON obyektində "message" açarı ilə API-nin sağlam olduğunu bildirən mesaj.
+    """
     return {"message": "API is healthy and running!"}
 
 app.include_router(auth.router)
