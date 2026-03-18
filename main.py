@@ -15,6 +15,10 @@ app = FastAPI(
 
 models.Base.metadata.create_all(bind=engine)
 
+@app.get("/helathy")
+def helathy():
+    return {"message": "API is healthy and running!"}
+
 app.include_router(auth.router)
 app.include_router(todos.router)
 app.include_router(admin.router)
