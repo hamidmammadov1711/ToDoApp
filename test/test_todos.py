@@ -85,3 +85,34 @@ def test_read_all_authenticated(test_todo):
          'owner_id': 1
          }
     ]
+
+
+# biraz daha professional yanaşma ilə aşağıdakı kimi yazmaq mümkündür
+"""
+def test_read_all_authenticated(test_todo):
+    response = client.get("/todos")
+    assert response.status_code == 200
+    
+    data = response.json()
+    assert len(data) == 1
+    assert data[0]['title'] == 'Learn to code!'
+    assert data[0]['description'] == 'Need to learn everyday!'
+"""
+
+
+def test_read_one_authenticated(test_todo):
+    response = client.get("/todos/todo/1")
+    assert response.status_code == status.HTTP_200_OK
+    assert (response.json() ==
+            {"title": "Learn to code!",
+             'complete': False, 'description': 'Need to learn everyday!',
+             'id': 1,
+             "priority": 5,
+             'owner_id': 1
+             })
+
+
+def test_read_one_authenticated_not_found():
+    response = client.get("/todos/todo/999")
+    assert response.status_code == 404
+    assert response.json() == {"detail": "Todo not found"}
