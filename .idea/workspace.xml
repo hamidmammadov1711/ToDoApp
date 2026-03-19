@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="fix: begining FastAPI test coplete...">
+    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="fix: FastAPI Project Test">
       <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test_todos.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_todos.py" afterDir="false" />
@@ -131,7 +131,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors",
+    "settings.editor.selected.configurable": "preferences.editor",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -280,7 +280,7 @@
       <workItem from="1773774514814" duration="4981000" />
       <workItem from="1773860384059" duration="3213000" />
       <workItem from="1773888624433" duration="4909000" />
-      <workItem from="1773896208076" duration="3101000" />
+      <workItem from="1773896208076" duration="3927000" />
     </task>
     <task id="LOCAL-00001" summary="initialize project structure with database models and configuration files">
       <option name="closed" value="true" />
@@ -634,7 +634,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773898531112</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="fix: FastAPI Project Test">
+      <option name="closed" value="true" />
+      <created>1773899578525</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1773899578525</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -665,7 +673,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CODE_SMELLS_PROFILE" value="Project Default" />
-    <MESSAGE value="update token response format to return user object on successful authentication" />
     <MESSAGE value="load environment variables for secret key and algorithm in authentication" />
     <MESSAGE value="load environment variables from .env &#10;SQLALCHEMY_DATABASE_URL = os.getenv(&quot;DATABASE_URL&quot;)&#10;database.py" />
     <MESSAGE value="fix: improve auth security and fix circular imports in todo routes&#10;refactor: update authentication flow and secure todo endpoints with owner_id filtering" />
@@ -690,7 +697,8 @@
     <MESSAGE value="fix: setup directory for testing" />
     <MESSAGE value="fix: setup def healthy() --&gt; docstring" />
     <MESSAGE value="fix: begining FastAPI test coplete..." />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: begining FastAPI test coplete..." />
+    <MESSAGE value="fix: FastAPI Project Test" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: FastAPI Project Test" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ToDoApp$.coverage" NAME=" Coverage Results" MODIFIED="1773776310005" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
