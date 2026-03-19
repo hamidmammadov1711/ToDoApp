@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="fix: setup directory for testing">
+    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="fix: setup def healthy() --&gt; docstring">
       <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/test_todos.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -274,7 +276,9 @@
       <workItem from="1773668395780" duration="4486000" />
       <workItem from="1773773811950" duration="669000" />
       <workItem from="1773774514814" duration="4981000" />
-      <workItem from="1773860384059" duration="2631000" />
+      <workItem from="1773860384059" duration="3213000" />
+      <workItem from="1773888624433" duration="4909000" />
+      <workItem from="1773896208076" duration="2038000" />
     </task>
     <task id="LOCAL-00001" summary="initialize project structure with database models and configuration files">
       <option name="closed" value="true" />
@@ -612,7 +616,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773862378011</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="fix: setup def healthy() --&gt; docstring">
+      <option name="closed" value="true" />
+      <created>1773863291947</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1773863291947</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -643,7 +655,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CODE_SMELLS_PROFILE" value="Project Default" />
-    <MESSAGE value="add JWT token generation for user authentication" />
     <MESSAGE value="update token response format to include token type" />
     <MESSAGE value="update token response format to return user object on successful authentication" />
     <MESSAGE value="load environment variables for secret key and algorithm in authentication" />
@@ -668,7 +679,8 @@
     <MESSAGE value="fix: @app.get(&quot;/healthy&quot;) enpoint in main.py file" />
     <MESSAGE value="fix: create new test_main.py module in test directory" />
     <MESSAGE value="fix: setup directory for testing" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: setup directory for testing" />
+    <MESSAGE value="fix: setup def healthy() --&gt; docstring" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: setup def healthy() --&gt; docstring" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ToDoApp$.coverage" NAME=" Coverage Results" MODIFIED="1773776310005" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

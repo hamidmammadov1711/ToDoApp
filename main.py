@@ -15,7 +15,7 @@ app = FastAPI(
 
 models.Base.metadata.create_all(bind=engine)
 
-@app.get("/helathy")
+@app.get("/healthy")
 def helathy():
     """
     Bu endpoint API-nin sağlam olduğunu yoxlamaq üçün istifadə olunur. API işləyirsə, bu endpoint "API is healthy and running!" mesajını qaytaracaq.
