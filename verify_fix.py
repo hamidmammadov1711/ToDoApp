@@ -2,8 +2,8 @@ import os
 import sys
 
 # Change to the project directory
-os.chdir('D:\\ToDoApp')
-sys.path.insert(0, 'D:\\ToDoApp')
+os.chdir('/')
+sys.path.insert(0, '/')
 
 print("Python version:", sys.version)
 print("\nTesting imports step by step...\n")

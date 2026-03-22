@@ -1,3 +1,10 @@
+"""
+Configuration and shared fixtures for the ToDoApp test suite.
+
+Setup for testing environment.
+Provides a Mock SQLite database and overrides FastAPI dependencies.
+"""
+
 import pytest
 from sqlalchemy import StaticPool
 from sqlalchemy import create_engine, text
