@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="fix: FastAPI Project Test Part 5 Create Admin test">
+    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="fix: FastAPI Project Test Part 6 Wrap Up Admin tests">
       <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/example/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/test_user.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test_admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/conftest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_example.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/example/test_example.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,11 +152,11 @@
       <recent name="D:\ToDoApp" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\ToDoApp\test\example" />
       <recent name="D:\ToDoApp" />
       <recent name="D:\ToDoApp\test" />
       <recent name="D:\ToDoApp\routers" />
       <recent name="D:\ToDoApp\tests" />
-      <recent name="D:\ToDoApp\models" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -201,7 +204,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test.test_example.test_equal_or_not_equal" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test.example.test_example.test_equal_or_not_equal" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="ToDoApp" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -214,7 +217,7 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test.test_example.test_equal_or_not_equal&quot;" />
+      <option name="_new_target" value="&quot;test.example.test_example.test_equal_or_not_equal&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -231,7 +234,7 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/test/test_example.py&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/test/example/test_example.py&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
@@ -239,7 +242,7 @@
       <list>
         <item itemvalue="Python.verify_fix" />
         <item itemvalue="Python tests.Python tests in test_example.py" />
-        <item itemvalue="Python tests.Python tests for test.test_example.test_equal_or_not_equal" />
+        <item itemvalue="Python tests.Python tests for test.example.test_example.test_equal_or_not_equal" />
         <item itemvalue="HTTP Request.FastAPI-endpoints | #1" />
         <item itemvalue="HTTP Request.generated-requests | #1" />
       </list>
@@ -310,15 +313,7 @@
       <workItem from="1773888624433" duration="4909000" />
       <workItem from="1773896208076" duration="4244000" />
       <workItem from="1774105672851" duration="884000" />
-      <workItem from="1774151568311" duration="9343000" />
-    </task>
-    <task id="LOCAL-00001" summary="initialize project structure with database models and configuration files">
-      <option name="closed" value="true" />
-      <created>1772225744203</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1772225744204</updated>
+      <workItem from="1774151568311" duration="12051000" />
     </task>
     <task id="LOCAL-00002" summary="update workspace configuration and recent branches for project structure">
       <option name="closed" value="true" />
@@ -704,7 +699,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774160862163</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="fix: FastAPI Project Test Part 6 Wrap Up Admin tests">
+      <option name="closed" value="true" />
+      <created>1774161711908</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1774161711911</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -735,7 +738,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CODE_SMELLS_PROFILE" value="Project Default" />
-    <MESSAGE value="fix: secure todo endpoints and resolve circular imports" />
     <MESSAGE value="fix: secure todo endpoints and new endpoint read_todo() for search by todo_id and owner_id" />
     <MESSAGE value="fix: clean code principies for auth and todos modules" />
     <MESSAGE value="fix: resolve user attribute errors and type warnings&#10;&#10;- Fix AttributeError by accessing user.id instead of user.get()&#10;- Update JWT payload to use Any type for datetime compatibility&#10;- Add type hinting and casting for user authentication" />
@@ -760,7 +762,8 @@
     <MESSAGE value="fix: FastAPI Project Test Part 3 Wrap up Test Todo and more" />
     <MESSAGE value="fix: FastAPI Project Test Part 4 Create Reusable Utils (conftest.py) File" />
     <MESSAGE value="fix: FastAPI Project Test Part 5 Create Admin test" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: FastAPI Project Test Part 5 Create Admin test" />
+    <MESSAGE value="fix: FastAPI Project Test Part 6 Wrap Up Admin tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: FastAPI Project Test Part 6 Wrap Up Admin tests" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ToDoApp$verify_fix.coverage" NAME="verify_fix Coverage Results" MODIFIED="1774159112745" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />

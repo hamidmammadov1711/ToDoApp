@@ -13,7 +13,8 @@ from starlette.testclient import TestClient
 
 from database import Base
 from main import app
-from models import Todos
+from models import Todos, Users
+from routers.auth import bcrypt_context
 
 DATABASE_URL = "sqlite:///./testdb.db"
 
@@ -71,4 +72,25 @@ def test_todo():
 
     with engine.connect() as connection:
         connection.execute(text("DELETE FROM todos;"))
+        connection.commit()
+
+
+@pytest.fixture
+def test_user():
+    user = Users(
+        username="hamidmammadovtest",
+        email="hamidmammadov@email.com",
+        first_name="Hamid",
+        last_name="Mammadov",
+        hashed_password=bcrypt_context.hash("testpassword"),
+        role="admin",
+        phone_number="(994)-531-00-00"
+    )
+
+    db = TestingSessionLocal()
+    db.add(user)
+    db.commit()
+    yield user
+    with engine.connect() as connection:
+        connection.execute(text("DELETE FROM users;"))
         connection.commit()
