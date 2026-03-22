@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="fix: FastAPI Project Test">
+    <list default="true" id="8cd39969-bb0d-4cba-82ea-c366109922e2" name="Changes" comment="fix: FastAPI Project Test Part 3 Wrap up Test Todo">
       <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test_todos.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_todos.py" afterDir="false" />
@@ -124,6 +124,7 @@
     "database.data.extractors.current.export.id": "Comma-separated (CSV)_id",
     "database.data.extractors.current.id": "Comma-separated (CSV)_id",
     "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "D:/ToDoApp",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -280,7 +281,9 @@
       <workItem from="1773774514814" duration="4981000" />
       <workItem from="1773860384059" duration="3213000" />
       <workItem from="1773888624433" duration="4909000" />
-      <workItem from="1773896208076" duration="3927000" />
+      <workItem from="1773896208076" duration="4244000" />
+      <workItem from="1774105672851" duration="884000" />
+      <workItem from="1774151568311" duration="3771000" />
     </task>
     <task id="LOCAL-00001" summary="initialize project structure with database models and configuration files">
       <option name="closed" value="true" />
@@ -642,7 +645,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773899578525</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="fix: FastAPI Project Test Part 2">
+      <option name="closed" value="true" />
+      <created>1773900435505</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1773900435506</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -673,7 +684,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CODE_SMELLS_PROFILE" value="Project Default" />
-    <MESSAGE value="load environment variables for secret key and algorithm in authentication" />
     <MESSAGE value="load environment variables from .env &#10;SQLALCHEMY_DATABASE_URL = os.getenv(&quot;DATABASE_URL&quot;)&#10;database.py" />
     <MESSAGE value="fix: improve auth security and fix circular imports in todo routes&#10;refactor: update authentication flow and secure todo endpoints with owner_id filtering" />
     <MESSAGE value="fixed: validation language of test_jwt.py file" />
@@ -698,7 +708,8 @@
     <MESSAGE value="fix: setup def healthy() --&gt; docstring" />
     <MESSAGE value="fix: begining FastAPI test coplete..." />
     <MESSAGE value="fix: FastAPI Project Test" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: FastAPI Project Test" />
+    <MESSAGE value="fix: FastAPI Project Test Part 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: FastAPI Project Test Part 2" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ToDoApp$.coverage" NAME=" Coverage Results" MODIFIED="1773776310005" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
