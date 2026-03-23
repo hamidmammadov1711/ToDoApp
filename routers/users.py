@@ -61,7 +61,7 @@ def change_password(user: user_dependency,
     db.commit()
 
 
-@router.put("/phone_number/{phone_number}", status_code=status.HTTP_204_NO_CONTENT)
+@router.put("/phone_number/{new_phone_number}", status_code=status.HTTP_204_NO_CONTENT)
 def change_phone_number(user: user_dependency,
                         db: db_dependency,
                         new_phone_number: str):
