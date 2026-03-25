@@ -7,7 +7,6 @@ anyio==4.12.1
 async-timeout==5.0.1
 attrs==25.4.0
 Automat==25.4.16
-backports.asyncio.runner==1.2.0
 bcrypt==4.0.1
 blinker==1.9.0
 certifi==2026.2.25
