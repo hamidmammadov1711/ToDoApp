@@ -5,8 +5,9 @@
 from datetime import timedelta, datetime, timezone
 from typing import Annotated, Any
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.templating import Jinja2Templates
 from jose import jwt
 from pydantic import BaseModel
 from starlette import status
@@ -41,6 +42,22 @@ class TokenResponse(BaseModel):
     token_type: str
 
 
+templates = Jinja2Templates(directory="templates")
+
+
+### Pages ###
+
+@router.get("/login-page")
+def render_login_page(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
+
+
+@router.get("/register-page")
+def render_register_page(request: Request):
+    return templates.TemplateResponse("register.html", {"request": request})
+
+
+### Endpoints ###
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def create_user(db: db_dependency, create_user_request: CreateUserRequest):
     """
