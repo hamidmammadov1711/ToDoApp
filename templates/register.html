@@ -1,73 +1,389 @@
-{% include "layout.html" %}
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qeydiyyat - Todo App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
+            padding: 45px;
+            width: 100%;
+            max-width: 520px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 32px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        h1 {
+            color: #333;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #444;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        label .required {
+            color: #e74c3c;
+            margin-left: 3px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e8e8e8;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            background: #fafafa;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        input::placeholder {
+            color: #aaa;
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23888' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+        }
+
+        .button-group {
+            margin-top: 28px;
+        }
+
+        button, .btn {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.35);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            border-left: 4px solid #dc2626;
+            animation: shake 0.5s ease;
+        }
+
+        .success-message {
+            background: #d1fae5;
+            color: #059669;
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            border-left: 4px solid #059669;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: #764ba2;
+        }
+
+        @media (max-width: 480px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .container {
+                padding: 30px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
 <div class="container">
-    <div class="card">
-        <div class="card-header">
-            Register
-        </div>
-        <div class="card-body">
-            <form id="registerForm">
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label>Email</label>
-                        <input type="text" class="form-control" name="email" required></div>
-                    <div class="form-group col-md-6">
-                        <label>Username</label>
-                        <input type="text" class="form-control" name="username" required>
-
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label>First Name</label>
-                        <input type="text" class="form-control" name="firstname" required>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>Last Name</label>
-                        <input type="text" class="form-control" name="lastname" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label>Role</label>
-                        <input type="text" class="form-control" name="role" required>
-
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>Phone Number</label>
-                        <input type="text" class="form-control" name="phone_number" autocomplete="phone_number"
-                               required>
-
-
-                    </div>
-
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label>Password</label>
-                        <input type="password" class="form-control" name="password" autocomplete="new-password"
-                               required>
-
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>Verify Password</label>
-                        <input type="password" class="form-control" name="password2" autocomplete="new-password"
-                               required>
-
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">
-                    Sign in
-                </button>
-            </form>
-        </div>
-        <div class="card-footer text-muted">
-            <a href="/auth/login-page">Already have an account?</a>
-
-        </div>
+    <div class="header">
+        <div class="header-icon">📋</div>
+        <h1>Qeydiyyat</h1>
+        <p class="subtitle">Yeni hesab yaradın</p>
     </div>
 
+    <div id="errorMsg" class="error-message"></div>
+    <div id="successMsg" class="success-message"></div>
+
+    <form id="registerForm">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="email">E-poçt <span class="required">*</span></label>
+                <input type="email" id="email" name="email" required
+                       placeholder="nümunə@email.com">
+            </div>
+            <div class="form-group">
+                <label for="username">İstifadəçi adı <span class="required">*</span></label>
+                <input type="text" id="username" name="username" required
+                       placeholder="İstifadəçi adı">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="firstname">Ad <span class="required">*</span></label>
+                <input type="text" id="firstname" name="firstname" required
+                       placeholder="Adınız">
+            </div>
+            <div class="form-group">
+                <label for="lastname">Soyad <span class="required">*</span></label>
+                <input type="text" id="lastname" name="lastname" required
+                       placeholder="Soyadınız">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="role">Rol <span class="required">*</span></label>
+                <select id="role" name="role" required>
+                    <option value="" disabled selected>Rol seçin</option>
+                    <option value="user">İstifadəçi</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="phone_number">Telefon</label>
+                <input type="tel" id="phone_number" name="phone_number"
+                       placeholder="+994 XX XXX XX XX">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Şifrə <span class="required">*</span></label>
+            <input type="password" id="password" name="password" required minlength="6"
+                   placeholder="Minimum 6 simvol" autocomplete="new-password">
+        </div>
+
+        <div class="form-group">
+            <label for="password2">Şifrəni təsdiqlə <span class="required">*</span></label>
+            <input type="password" id="password2" name="password2" required minlength="6"
+                   placeholder="Şifrəni yenidən daxil edin" autocomplete="new-password">
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="btn-primary" id="submitBtn">
+                <span>✨ Qeydiyyatdan Keç</span>
+            </button>
+        </div>
+    </form>
+
+    <div class="footer">
+        <p style="color: #888; font-size: 14px;">Artıq hesabınız var?
+            <a href="/auth/login-page">Daxil olun</a>
+        </p>
+    </div>
 </div>
 
+<script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const errorMsg = document.getElementById('errorMsg');
+        const successMsg = document.getElementById('successMsg');
+        const submitBtn = document.getElementById('submitBtn');
+
+        errorMsg.style.display = 'none';
+        successMsg.style.display = 'none';
+
+        const password = document.getElementById('password').value;
+        const password2 = document.getElementById('password2').value;
+
+        if (password !== password2) {
+            errorMsg.textContent = '❌ Şifrələr uyğun gəlmir!';
+            errorMsg.style.display = 'block';
+            return;
+        }
+
+        const payload = {
+            email: document.getElementById('email').value.trim(),
+            username: document.getElementById('username').value.trim(),
+            first_name: document.getElementById('firstname').value.trim(),
+            last_name: document.getElementById('lastname').value.trim(),
+            role: document.getElementById('role').value,
+            phone_number: document.getElementById('phone_number').value.trim(),
+            password: password
+        };
+
+        // Show loading
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<div class="spinner"></div><span>Qeydiyyat olunur...</span>';
+
+        try {
+            const response = await fetch('/auth/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.status === 201 || response.ok) {
+                successMsg.textContent = '✅ Qeydiyyat uğurla tamamlandı! Giriş səhifəsinə yönləndirilirsiniz...';
+                successMsg.style.display = 'block';
+                setTimeout(() => {
+                    window.location.href = '/auth/login-page';
+                }, 1500);
+            } else {
+                const errorData = await response.json();
+                errorMsg.textContent = '❌ ' + (errorData.detail || 'Qeydiyyat uğursuz oldu.');
+                errorMsg.style.display = 'block';
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>✨ Qeydiyyatdan Keç</span>';
+            }
+        } catch (error) {
+            errorMsg.textContent = '❌ Şəbəkə xətası: ' + error.message;
+            errorMsg.style.display = 'block';
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<span>✨ Qeydiyyatdan Keç</span>';
+        }
+    });
+</script>
 </body>
 </html>

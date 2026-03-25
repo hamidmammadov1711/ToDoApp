@@ -1,4 +1,4 @@
-""""""
+"""Test cases for user endpoints."""
 from fastapi import status
 
 from dependencies import get_db, get_current_user
@@ -39,9 +39,9 @@ def test_change_password_invalid_current_password(test_user):
         "new_password": "newpassword"
     })
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
-    assert response.json() == {"detail": "Error on password change: Incorrect current password"}
+    assert response.json() == {"detail": "Error on password change"}
 
 
 def test_change_phone_number_success(test_user):
-    response = client.put("/user/phone_number/2222222222")
+    response = client.put("/user/phonenumber/2222222222")
     assert response.status_code == 204

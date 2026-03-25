@@ -14,13 +14,12 @@ from starlette.testclient import TestClient
 from database import Base
 from main import app
 from models import Todos, Users
-from routers.auth import bcrypt_context
+from dependencies import bcrypt_context
 
 DATABASE_URL = "sqlite:///./testdb.db"
 
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False},
                        poolclass=StaticPool,
-
                        )
 
 TestingSessionLocal = sessionmaker(autocommit=False,
@@ -41,13 +40,7 @@ def override_get_db():
 
 def override_get_current_user():
     """Override the current user dependency for testing."""
-
-    class MockUser:
-        id = 1
-        username = "hamidmammadov"
-        role = "admin"
-
-    return MockUser()
+    return {"username": "hamidmammadov", "id": 1, "user_role": "admin"}
 
 
 client = TestClient(app)

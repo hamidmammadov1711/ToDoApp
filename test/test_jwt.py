@@ -1,5 +1,4 @@
 from jose import jwt, JWTError
-import os
 
 # Test üçün şərti parametrlər
 SECRET_KEY = "supersecret"

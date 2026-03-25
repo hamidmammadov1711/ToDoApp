@@ -1,15 +1,23 @@
-"""Bu kod parçacığı, FastAPI istifadə edərək bir "Todo" tətbiqinin API marşrutlarını təyin edir. Bu marşrutlar, istifadəçi doğrulaması və verilənlər bazası əməliyyatları ilə birlikdə CRUD (Yarat, Oxu, Yenilə, Sil) əməliyyatlarını həyata keçirir. Hər bir marşrut, istifadəçinin yalnız öz tapşırıqlarını görməsini və idarə etməsini təmin etmək üçün "owner_id" sahəsini yoxlayır."""
+"""Bu kod parçacığı, FastAPI istifadə edərək bir "Todo" tətbiqinin API marşrutlarını təyin edir.
+CRUD (Yarat, Oxu, Yenilə, Sil) əməliyyatlarını həyata keçirir."""
 
-from fastapi import APIRouter, HTTPException, Path
+from fastapi import APIRouter, HTTPException, Path, Request
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field
 from starlette import status
+from starlette.responses import RedirectResponse
 
-from dependencies import db_dependency, user_dependency
+from dependencies import (
+    db_dependency, user_dependency,
+    get_current_user_from_cookie
+)
 from models import Todos
+
+templates = Jinja2Templates(directory="templates")
 
 router = APIRouter(
     prefix='/todos',
-    tags=['📝 todos']
+    tags=['📄 todos']
 )
 
 
@@ -17,80 +25,92 @@ class TodoRequest(BaseModel):
     title: str = Field(min_length=3)
     description: str = Field(min_length=3, max_length=100)
     priority: int = Field(gt=0, lt=6)
-    complete: bool = False
+    complete: bool
 
 
+def redirect_to_login():
+    """Login səhifəsinə yönləndirmə."""
+    redirect_response = RedirectResponse(url="/auth/login-page", status_code=status.HTTP_302_FOUND)
+    redirect_response.delete_cookie(key="access_token")
+    return redirect_response
+
+
+### Pages ###
+
+@router.get("/todo-page")
+async def render_todo_page(request: Request, db: db_dependency):
+    """Todo siyahısı səhifəsini render edir."""
+    user = await get_current_user_from_cookie(request)
+    if user is None:
+        return redirect_to_login()
+
+    todos = db.query(Todos).filter(Todos.owner_id == user.get("id")).all()
+    return templates.TemplateResponse(request, "todo.html", {"todos": todos, "user": user})
+
+
+@router.get("/add-todo-page")
+async def render_add_todo_page(request: Request):
+    """Yeni todo əlavə etmə səhifəsini render edir."""
+    user = await get_current_user_from_cookie(request)
+    if user is None:
+        return redirect_to_login()
+    return templates.TemplateResponse(request, "add-todo.html", {"user": user})
+
+
+@router.get("/edit-todo-page/{todo_id}")
+async def render_edit_todo_page(request: Request, todo_id: int, db: db_dependency):
+    """Todo redaktə səhifəsini render edir."""
+    user = await get_current_user_from_cookie(request)
+    if user is None:
+        return redirect_to_login()
+
+    todo = db.query(Todos).filter(Todos.id == todo_id).first()
+    return templates.TemplateResponse(request, "edit-todo.html", {"todo": todo, "user": user})
+
+
+### Endpoints ###
 @router.get("/", status_code=status.HTTP_200_OK)
-def read_all(user: user_dependency, db: db_dependency):
-    """
-
-    :param user:
-    :param db:
-    :return:
-    """
-
-    # İndi tapşırıqları yalnız 'owner_id' istifadəçinin ID-sinə bərabər olanlarla filtrləyirik
-    return db.query(Todos).filter(Todos.owner_id == user.id).all()
+async def read_all(user: user_dependency, db: db_dependency):
+    """Bütün todoları qaytarır."""
+    if user is None:
+        raise HTTPException(status_code=401, detail='Authentication Failed')
+    return db.query(Todos).filter(Todos.owner_id == user.get('id')).all()
 
 
 @router.get("/todo/{todo_id}", status_code=status.HTTP_200_OK)
-def read_todo(user: user_dependency, db: db_dependency,
-              todo_id: int = Path(gt=0)):
-    """
+async def read_todo(user: user_dependency, db: db_dependency, todo_id: int = Path(gt=0)):
+    """Tək bir todonu qaytarır."""
+    if user is None:
+        raise HTTPException(status_code=401, detail='Authentication Failed')
 
-    :param user:
-    :param db:
-    :param todo_id:
-    :return:
-    """
-
-    # Tapşırığı taparkən həm id-ni, həm də owner_id-ni yoxlayırıq
-    todo_model = (db.query(Todos).filter(Todos.id == todo_id)
-                  .filter(Todos.owner_id == user.id).first())
+    todo_model = db.query(Todos).filter(Todos.id == todo_id) \
+        .filter(Todos.owner_id == user.get('id')).first()
     if todo_model is not None:
         return todo_model
-    raise HTTPException(status_code=404, detail='Todo not found')
+    raise HTTPException(status_code=404, detail='Todo not found.')
 
 
 @router.post("/todo", status_code=status.HTTP_201_CREATED)
-def create_todo(user: user_dependency,
-                db: db_dependency,
-                todo_request: TodoRequest):
-    """
-
-    :param user:
-    :param db:
-    :param todo_request:
-    """
-
-    # owner_id sahəsini istifadəçidən gələn ID ilə doldururuq
-    todo_model = Todos(**todo_request.model_dump(), owner_id=user.id)
+async def create_todo(user: user_dependency, db: db_dependency,
+                      todo_request: TodoRequest):
+    """Yeni todo yaradır."""
+    if user is None:
+        raise HTTPException(status_code=401, detail='Authentication Failed')
+    todo_model = Todos(**todo_request.model_dump(), owner_id=user.get('id'))
 
     db.add(todo_model)
     db.commit()
-    db.refresh(todo_model)
-    return todo_model
 
 
 @router.put("/todo/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)
-def update_todo(user: user_dependency,
-                db: db_dependency,
-                todo_request: TodoRequest,
-                todo_id: int = Path(gt=0)):  # 'id' əvəzinə 'todo_id'
-    """
-    :param user:
-    :param db:
-    :param todo_request:
-    :param todo_id:
-    :return:
-    """
-
-    # Artıq 'id' açar sözü ilə qarışıqlıq yoxdur
-    todo_model = (db.query(Todos).filter(Todos.id == todo_id)
-                  .filter(Todos.owner_id == user.id).first())
-
+async def update_todo(user: user_dependency, db: db_dependency,
+                      todo_request: TodoRequest,
+                      todo_id: int = Path(gt=0)):
+    """Todonu yeniləyir."""
+    todo_model = db.query(Todos).filter(Todos.id == todo_id) \
+        .filter(Todos.owner_id == user.get('id')).first()
     if todo_model is None:
-        raise HTTPException(status_code=404, detail='Todo not found')
+        raise HTTPException(status_code=404, detail='Todo not found.')
 
     todo_model.title = todo_request.title
     todo_model.description = todo_request.description
@@ -99,25 +119,15 @@ def update_todo(user: user_dependency,
 
     db.add(todo_model)
     db.commit()
-    return
 
 
 @router.delete("/todo/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_todo(user: user_dependency, db: db_dependency,
-                todo_id: int = Path(gt=0)):
-    """
-
-    :param user:
-    :param db:
-    :param todo_id:
-    """
-
-    # Tapşırığı taparkən həm id-ni, həm də owner_id-ni yoxlayırıq
-    todo_model = (db.query(Todos).filter(Todos.id == todo_id)
-                  .filter(Todos.owner_id == user.id).first())
-
+async def delete_todo(user: user_dependency, db: db_dependency, todo_id: int = Path(gt=0)):
+    """Todonu silir."""
+    todo_model = db.query(Todos).filter(Todos.id == todo_id) \
+        .filter(Todos.owner_id == user.get('id')).first()
     if todo_model is None:
-        raise HTTPException(status_code=404, detail='Todo not found')
+        raise HTTPException(status_code=404, detail='Todo not found.')
+    db.query(Todos).filter(Todos.id == todo_id).filter(Todos.owner_id == user.get('id')).delete()
 
-    db.delete(todo_model)
     db.commit()

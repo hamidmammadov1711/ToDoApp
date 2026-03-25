@@ -1,13 +1,13 @@
-""""""
+"""Test cases for auth endpoints."""
 from datetime import timedelta
 
 import pytest
 from fastapi import HTTPException
 from jose import jwt
 
-from dependencies import get_db, authenticate_user, get_current_user
+from dependencies import get_db, get_current_user, SECRET_KEY, ALGORITHM, authenticate_user
 from main import app
-from routers.auth import create_access_token, SECRET_KEY, ALGORITHM
+from routers.auth import create_access_token
 from .conftest import (
     override_get_db,
     TestingSessionLocal,
@@ -43,32 +43,26 @@ def test_create_access_token():
                                options={'verify_signature': False})
 
     assert decoded_token['sub'] == username
-    assert decoded_token['user_id'] == user_id
+    assert decoded_token['id'] == user_id
     assert decoded_token['role'] == role
 
 
 @pytest.mark.anyio
-async def test_get_current_user_valid_token(test_user):  # test_user fixture-u əlavə edildi
-    # 1. Tokeni test_user-in real məlumatları ilə hazırlayırıq
+async def test_get_current_user_valid_token(test_user):
     encode = {
         'sub': test_user.username,
-        'user_id': test_user.id,
+        'id': test_user.id,
         'role': test_user.role
     }
     token = jwt.encode(encode, SECRET_KEY, algorithm=ALGORITHM)
 
-    db = TestingSessionLocal()
-    try:
-        # 2. Funksiyanı çağırırıq
-        user = get_current_user(token=token, db=db)
+    # get_current_user returns a dict
+    user = get_current_user(token=token)
 
-        # 3. Yoxlamalar
-        assert user is not None
-        assert user.username == test_user.username
-        assert user.id == test_user.id
-        assert user.role == test_user.role
-    finally:
-        db.close()
+    assert user is not None
+    assert user['username'] == test_user.username
+    assert user['id'] == test_user.id
+    assert user['user_role'] == test_user.role
 
 
 @pytest.mark.anyio

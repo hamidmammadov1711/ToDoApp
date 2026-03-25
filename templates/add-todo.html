@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yeni Tapşırıq Əlavə Et - Todo App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
+            padding: 45px;
+            width: 100%;
+            max-width: 520px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 32px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        h1 {
+            color: #333;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #444;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        label .required {
+            color: #e74c3c;
+            margin-left: 3px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e8e8e8;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            background: #fafafa;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        input[type="text"]::placeholder,
+        textarea::placeholder {
+            color: #aaa;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .priority-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .priority-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            background: linear-gradient(to right, #27ae60, #f39c12, #e74c3c);
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .priority-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border: 3px solid #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
+
+        .priority-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .priority-value {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .priority-value.level-1 {
+            background: #27ae60;
+        }
+
+        .priority-value.level-2 {
+            background: #2ecc71;
+        }
+
+        .priority-value.level-3 {
+            background: #f39c12;
+        }
+
+        .priority-value.level-4 {
+            background: #e67e22;
+        }
+
+        .priority-value.level-5 {
+            background: #e74c3c;
+        }
+
+        .priority-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 25px 0;
+            padding: 16px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .checkbox-group:hover {
+            border-color: #667eea;
+        }
+
+        input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .checkbox-label {
+            margin: 0;
+            cursor: pointer;
+            color: #444;
+            font-weight: 500;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        button, .btn {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.35);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #f1f3f4;
+            color: #666;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            background: #e8eaed;
+        }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            border-left: 4px solid #dc2626;
+            animation: shake 0.5s ease;
+        }
+
+        .success-message {
+            background: #d1fae5;
+            color: #059669;
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            border-left: 4px solid #059669;
+        }
+
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-5px);
+            }
+            75% {
+                transform: translateX(5px);
+            }
+        }
+
+        .char-counter {
+            text-align: right;
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .char-counter.warning {
+            color: #f39c12;
+        }
+
+        .char-counter.danger {
+            color: #e74c3c;
+        }
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="header-icon">📝</div>
+        <h1>Yeni Tapşırıq</h1>
+        <p class="subtitle">Yeni tapşırıq əlavə edin</p>
+    </div>
+
+    <div id="errorMsg" class="error-message"></div>
+    <div id="successMsg" class="success-message"></div>
+
+    <form id="todoForm">
+        <div class="form-group">
+            <label for="title">Başlıq <span class="required">*</span></label>
+            <input type="text" id="title" name="title" required minlength="3"
+                   placeholder="Tapşırıq başlığı (min. 3 simvol)">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Təsvir <span class="required">*</span></label>
+            <textarea id="description" name="description" required minlength="3" maxlength="100"
+                      placeholder="Tapşırıq təsviri (min. 3, max. 100 simvol)"></textarea>
+            <div class="char-counter" id="charCounter">0 / 100</div>
+        </div>
+
+        <div class="form-group">
+            <label for="priority">Prioritet <span class="required">*</span></label>
+            <div class="priority-wrapper">
+                <input type="range" id="priority" name="priority" class="priority-slider"
+                       min="1" max="5" value="1">
+                <div class="priority-value level-1" id="priorityValue">1</div>
+            </div>
+            <div class="priority-labels">
+                <span>Çox aşağı</span>
+                <span>Çox yüksək</span>
+            </div>
+        </div>
+
+        <div class="checkbox-group" onclick="document.getElementById('complete').click()">
+            <input type="checkbox" id="complete" name="complete">
+            <label class="checkbox-label" for="complete">Dərhal tamamlandı kimi işarələ</label>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="btn-primary" id="submitBtn">
+                <span>💾 Yadda Saxla</span>
+            </button>
+            <a href="/todos/todo-page" class="btn btn-secondary">❌ İmtina</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Cookie helper function
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    // Priority slider styling
+    const prioritySlider = document.getElementById('priority');
+    const priorityValue = document.getElementById('priorityValue');
+
+    prioritySlider.addEventListener('input', function () {
+        const value = this.value;
+        priorityValue.textContent = value;
+        priorityValue.className = 'priority-value level-' + value;
+    });
+
+    // Character counter
+    const description = document.getElementById('description');
+    const charCounter = document.getElementById('charCounter');
+
+    description.addEventListener('input', function () {
+        const length = this.value.length;
+        charCounter.textContent = length + ' / 100';
+        charCounter.className = 'char-counter';
+        if (length >= 90) {
+            charCounter.classList.add('danger');
+        } else if (length >= 70) {
+            charCounter.classList.add('warning');
+        }
+    });
+
+    // Form submission
+    document.getElementById('todoForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const errorMsg = document.getElementById('errorMsg');
+        const successMsg = document.getElementById('successMsg');
+        const submitBtn = document.getElementById('submitBtn');
+
+        errorMsg.style.display = 'none';
+        successMsg.style.display = 'none';
+
+        // Get token from cookie
+        const token = getCookie('access_token');
+
+        if (!token) {
+            errorMsg.textContent = '❌ İcazə yoxdur! Zəhmət olmasa yenidən daxil olun.';
+            errorMsg.style.display = 'block';
+            setTimeout(() => {
+                window.location.href = '/auth/login-page';
+            }, 1500);
+            return;
+        }
+
+        const formData = {
+            title: document.getElementById('title').value.trim(),
+            description: document.getElementById('description').value.trim(),
+            priority: parseInt(document.getElementById('priority').value),
+            complete: document.getElementById('complete').checked
+        };
+
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<div class="spinner"></div><span>Göndərilir...</span>';
+
+        try {
+            const response = await fetch('/todos/todo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (response.status === 201 || response.status === 200) {
+                successMsg.textContent = '✅ Tapşırıq uğurla əlavə edildi!';
+                successMsg.style.display = 'block';
+                setTimeout(() => {
+                    window.location.href = '/todos/todo-page';
+                }, 1200);
+            } else if (response.status === 401) {
+                errorMsg.textContent = '❌ İcazə yoxdur! Zəhmət olmasa yenidən daxil olun.';
+                errorMsg.style.display = 'block';
+                setTimeout(() => {
+                    window.location.href = '/auth/login-page';
+                }, 2000);
+            } else {
+                const data = await response.json();
+                errorMsg.textContent = '❌ Xəta: ' + (data.detail || 'Naməlum xəta baş verdi');
+                errorMsg.style.display = 'block';
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>💾 Yadda Saxla</span>';
+            }
+        } catch (error) {
+            errorMsg.textContent = '❌ Şəbəkə xətası: ' + error.message;
+            errorMsg.style.display = 'block';
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<span>💾 Yadda Saxla</span>';
+        }
+    });
+</script>
+</body>
+</html>

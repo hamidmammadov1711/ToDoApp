@@ -1,4 +1,4 @@
-""""""
+"""Test cases for admin endpoints."""
 from fastapi import status
 
 from dependencies import get_db, get_current_user
@@ -17,7 +17,7 @@ app.dependency_overrides[get_current_user] = override_get_current_user
 
 
 def test_admin_read_all_authenticated(test_todo):
-    response = client.get("/admin/todos")
+    response = client.get("/admin/todo")
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == [{'complete': False,
                                 'title': 'Learn to code!',
@@ -37,4 +37,4 @@ def test_admin_delete_todo(test_todo):
 def test_admin_delete_not_found():
     response = client.delete("/admin/todo/9999")
     assert response.status_code == 404
-    assert response.json() == {'detail': 'Todo not found'}
+    assert response.json() == {'detail': 'Todo not found.'}

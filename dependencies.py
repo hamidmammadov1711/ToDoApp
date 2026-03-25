@@ -1,11 +1,10 @@
-"""Bu modul, FastAPI tətbiqində istifadəçi autentifikasiyası və verilənlər bazası sessiyasını idarə etmək üçün istifadə olunan funksiyaları və asılılıqları ehtiva edir. Burada, istifadəçi məlumatlarını doğrulamaq, tokenləri yoxlamaq və verilənlər bazası ilə əlaqə yaratmaq üçün lazımlı funksiyalar və asılılıqlar təyin edilir. Bu modul, tətbiqin digər hissələrində istifadə edilərək, kodun təkrarını azaltmağa və tətbiqin strukturunu daha təmiz etməyə kömək edir."""
+"""Bu modul, FastAPI tətbiqində istifadəçi autentifikasiyası və verilənlər bazası sessiyasını idarə etmək üçün istifadə olunan funksiyaları və asılılıqları ehtiva edir."""
 
 import os
-from typing import Annotated
+from typing import Annotated, Optional
 
-import bcrypt
 from dotenv import load_dotenv
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt, JWTError
 from passlib.context import CryptContext
@@ -17,17 +16,14 @@ from models import Users
 load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = os.getenv("ALGORITHM")
+
 oauth2_bearer = OAuth2PasswordBearer(tokenUrl="auth/token")
 
-bcrypt_context = CryptContext(schemes=["bcrypt"],
-                              deprecated="auto",
-                              bcrypt__truncate_error=True)
+bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 def get_db():
-    """
-    get_db funksiyası, SQLAlchemy sessiyasını yaratmaq və idarə etmək üçün istifadə olunur. Bu funksiya, FastAPI-nin Depends funksiyası ilə birlikdə istifadə edilərək, hər bir API endpointində verilənlər bazası sessiyasını təmin edir. Sessiya yaradıldıqdan sonra, bu sessiya yield edilir və endpoint işlədikdən sonra sessiya avtomatik olaraq bağlanır.
-    """
+    """Verilənlər bazası sessiyası yaradır."""
     db = session_local()
     try:
         yield db
@@ -38,68 +34,61 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 
 
-# authenticate_user funksiyasını bura köçürürük ki, həm auth.py, həm də digər yerlərdə istifadə edə bilək
 def authenticate_user(username: str, password: str, db: Session):
-    """
-    :param username:
-    :param password:
-    :param db:
-    :return:
-    """
+    """İstifadəçi adı və şifrə ilə autentifikasiya."""
     user = db.query(Users).filter(Users.username == username).first()
-
     if not user or not bcrypt_context.verify(password, str(user.hashed_password)):
         return False
     return user
 
 
-def get_current_user(token: Annotated[str, Depends(oauth2_bearer)],
-                     db: Session = Depends(get_db)):
-    """
+# ==================== 1. API ENDPOINTLƏR ÜÇÜN (admin.py, users.py) ====================
 
-    :param token:
-    :param db:
-    :return:
+def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
+    """
+    API endpoint-ləri üçün: Authorization header-dən token oxuyur.
+    Exception atır əgər token etibarsızdırsa (401).
     """
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
-        user_id: int = payload.get("user_id")  # auth.py-də 'user_id' olaraq qeyd etmisiniz
+        user_id: int = payload.get("id")
         user_role: str = payload.get("role")
 
         if username is None or user_id is None:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                                 detail="Could not validate credentials")
 
-        # Query daxilində həm ID-ni, həm də ROL-u yoxlayırıq
-        user = db.query(Users).filter(Users.id == user_id) \
-            .filter(Users.role == user_role).first()
-
-        if user is None:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                                detail="User not found or role mismatch")
-        return user
+        return {"username": username, "id": user_id, "user_role": user_role}
     except JWTError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail="Could not validate credentials")
 
 
-user_dependency = Annotated[Users, Depends(get_current_user)]
+# API endpoint-ləri üçün type alias (admin.py, users.py buna istinad edir)
+user_dependency = Annotated[dict, Depends(get_current_user)]
 
 
-def hash_password(password: str) -> str:
-    """ Şifrəni hashləyir"""
-    salt = bcrypt.gensalt()
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
-    return hashed_password.decode('utf-8')
+# ==================== 2. WEB SƏHİFƏLƏR ÜÇÜN (todos.py) ====================
 
+async def get_current_user_from_cookie(request: Request) -> Optional[dict]:
+    """
+    Web səhifələri üçün: Cookie-dən token oxuyur.
+    Exception ATMIR, əksinə None qaytarır (redirect etmək üçün).
+    """
+    token = request.cookies.get("access_token")
+    if not token:
+        return None
 
-def verify_password(plain_password: str, hashed_password: str) -> bool:
-    """Şifrəni yoxlayır"""
     try:
-        return bcrypt.checkpw(
-            plain_password.encode('utf-8'),
-            hashed_password.encode('utf-8')
-        )
-    except Exception:
-        return False
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        user_id: int = payload.get("id")
+        user_role: str = payload.get("role")
+
+        if username is None or user_id is None:
+            return None
+
+        return {"username": username, "id": user_id, "user_role": user_role}
+    except JWTError:
+        return None
