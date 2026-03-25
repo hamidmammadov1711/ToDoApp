@@ -3,19 +3,21 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Virtual Environment (Sənin .venv qovluğun)
+# Virtual Environment (Your .venv directory)
 .venv/
 venv/
 ENV/
+.env/
 
-# Database (Bazanı GitHub-a göndərmirik)
+
+# Database (Don't send database in GitHub)
 *.db
 *.sqlite
 *.sqlite3
 *.mysql
-*.posgresql
+*.postgresql
 
-# IDE Settings (PyCharm/VSCode tənzimləmələri)
+# IDE Settings (PyCharm/VSCode settings)
 .idea/
 .vscode/
 
