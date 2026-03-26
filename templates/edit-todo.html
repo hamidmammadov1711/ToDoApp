@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tapşırığı Redaktə Et - Todo App</title>
+    <title>{{ t.edit_todo.page_title }}</title>
     <style>
         * {
             margin: 0;
@@ -484,12 +484,16 @@
 
 </head>
 <body>
+<div class="lang-switcher" style="position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 20px; backdrop-filter: blur(10px);">
+    <a href="/set-language/az" style="text-decoration: none; font-size: 22px; margin-right: 8px; opacity: {% if lang == 'az' %}1{% else %}0.5{% endif %}; transition: opacity 0.3s;" title="Azərbaycanca">🇦🇿</a>
+    <a href="/set-language/en" style="text-decoration: none; font-size: 22px; opacity: {% if lang == 'en' %}1{% else %}0.5{% endif %}; transition: opacity 0.3s;" title="English">🇬🇧</a>
+</div>
 <div class="container">
     {% if todo %}
         <div class="header">
             <div class="header-icon">✏️</div>
-            <h1>Tapşırığı Redaktə Et</h1>
-            <p class="subtitle">Tapşırıq məlumatlarını yeniləyin</p>
+            <h1>{{ t.edit_todo.header }}</h1>
+            <p class="subtitle">{{ t.edit_todo.subtitle }}</p>
             <span class="todo-id">ID: {{ todo.id }}</span>
         </div>
 
@@ -500,54 +504,54 @@
             <input type="hidden" id="todoId" value="{{ todo.id }}">
 
             <div class="form-group">
-                <label for="title">Başlıq <span class="required">*</span></label>
+                <label for="title">{{ t.edit_todo.title_label }} <span class="required">*</span></label>
                 <input type="text" id="title" name="title" required minlength="3"
-                       value="{{ todo.title }}" placeholder="Tapşırıq başlığı">
+                       value="{{ todo.title }}" placeholder="{{ t.edit_todo.title_placeholder }}">
             </div>
 
             <div class="form-group">
-                <label for="description">Təsvir <span class="required">*</span></label>
+                <label for="description">{{ t.edit_todo.desc_label }} <span class="required">*</span></label>
                 <textarea id="description" name="description" required minlength="3" maxlength="100"
-                          placeholder="Tapşırıq təsviri">{{ todo.description }}</textarea>
+                          placeholder="{{ t.edit_todo.desc_placeholder }}">{{ todo.description }}</textarea>
                 <div class="char-counter" id="charCounter">{{ todo.description|length }} / 100</div>
             </div>
 
             <div class="form-group">
-                <label for="priority">Prioritet <span class="required">*</span></label>
+                <label for="priority">{{ t.edit_todo.priority_label }} <span class="required">*</span></label>
                 <div class="priority-wrapper">
                     <input type="range" id="priority" name="priority" class="priority-slider"
                            min="1" max="5" value="{{ todo.priority }}">
                     <div class="priority-value level-{{ todo.priority }}" id="priorityValue">{{ todo.priority }}</div>
                 </div>
                 <div class="priority-labels">
-                    <span>Çox aşağı</span>
-                    <span>Çox yüksək</span>
+                    <span>{{ t.edit_todo.priority_low }}</span>
+                    <span>{{ t.edit_todo.priority_high }}</span>
                 </div>
             </div>
 
             <div class="checkbox-group {% if todo.complete %}checked{% endif %}" id="checkboxGroup"
                  onclick="toggleComplete()">
                 <input type="checkbox" id="complete" name="complete" {% if todo.complete %}checked{% endif %}>
-                <label class="checkbox-label" for="complete">Tamamlandı</label>
+                <label class="checkbox-label" for="complete">{{ t.edit_todo.complete_label }}</label>
             </div>
 
             <div class="button-group">
                 <button type="submit" class="btn-primary" id="submitBtn">
-                    <span>💾 Yadda Saxla</span>
+                    <span>{{ t.edit_todo.btn_save }}</span>
                 </button>
                 <button type="button" class="btn-danger" onclick="showDeleteModal()">
-                    <span>🗑️ Sil</span>
+                    <span>{{ t.edit_todo.btn_delete }}</span>
                 </button>
-                <a href="/todos/todo-page" class="btn btn-secondary">❌ İmtina</a>
+                <a href="/todos/todo-page" class="btn btn-secondary">{{ t.edit_todo.btn_cancel }}</a>
             </div>
         </form>
     {% else %}
         <div class="not-found">
             <div class="not-found-icon">😕</div>
-            <h2>Tapşırıq Tapılmadı</h2>
-            <p>Bu ID ilə tapşırıq mövcud deyil və ya sizə aid deyil.</p>
+            <h2>{{ t.edit_todo.not_found_header }}</h2>
+            <p>{{ t.edit_todo.not_found_desc }}</p>
             <br>
-            <a href="/todos/todo-page" class="btn btn-secondary" style="display: inline-block;">← Geri Qayıt</a>
+            <a href="/todos/todo-page" class="btn btn-secondary" style="display: inline-block;">{{ t.edit_todo.not_found_btn }}</a>
         </div>
     {% endif %}
 </div>
@@ -556,11 +560,11 @@
 <div class="modal-overlay" id="deleteModal">
     <div class="modal">
         <div class="modal-icon">⚠️</div>
-        <h3>Tapşırığı Sil</h3>
-        <p>Bu tapşırığı silmək istədiyinizə əminsiniz? Bu əməliyyat geri qaytarıla bilməz.</p>
+        <h3>{{ t.edit_todo.modal_header }}</h3>
+        <p>{{ t.edit_todo.modal_desc }}</p>
         <div class="modal-buttons">
-            <button class="btn-confirm-delete" onclick="confirmDelete()" id="confirmDeleteBtn">Bəli, Sil</button>
-            <button class="btn-cancel-delete" onclick="hideDeleteModal()">Xeyr</button>
+            <button class="btn-confirm-delete" onclick="confirmDelete()" id="confirmDeleteBtn">{{ t.edit_todo.modal_confirm }}</button>
+            <button class="btn-cancel-delete" onclick="hideDeleteModal()">{{ t.edit_todo.modal_cancel }}</button>
         </div>
     </div>
 </div>
@@ -666,7 +670,7 @@
 
             // Show loading state
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<div class="spinner"></div><span>Yenilənir...</span>';
+            submitBtn.innerHTML = '<div class="spinner"></div><span>{{ t.edit_todo.btn_loading }}</span>';
 
             try {
                 const response = await fetch(`/todos/todo/${todoId}`, {
@@ -695,19 +699,19 @@
                     errorMsg.textContent = '❌ Tapşırıq tapılmadı!';
                     errorMsg.style.display = 'block';
                     submitBtn.disabled = false;
-                    submitBtn.innerHTML = '<span>💾 Yadda Saxla</span>';
+                    submitBtn.innerHTML = '<span>{{ t.edit_todo.btn_save }}</span>';
                 } else {
                     const data = await response.json();
                     errorMsg.textContent = '❌ Xəta: ' + (data.detail || 'Naməlum xəta baş verdi');
                     errorMsg.style.display = 'block';
                     submitBtn.disabled = false;
-                    submitBtn.innerHTML = '<span>💾 Yadda Saxla</span>';
+                    submitBtn.innerHTML = '<span>{{ t.edit_todo.btn_save }}</span>';
                 }
             } catch (error) {
                 errorMsg.textContent = '❌ Şəbəkə xətası: ' + error.message;
                 errorMsg.style.display = 'block';
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = '<span>💾 Yadda Saxla</span>';
+                submitBtn.innerHTML = '<span>{{ t.edit_todo.btn_save }}</span>';
             }
         });
 
@@ -728,7 +732,7 @@
             }
 
             confirmBtn.disabled = true;
-            confirmBtn.innerHTML = '<div class="spinner"></div> Silinir...';
+            confirmBtn.innerHTML = '<div class="spinner"></div> {{ t.edit_todo.modal_loading }}';
 
             try {
                 const response = await fetch(`/todos/todo/${todoId}`, {
@@ -761,7 +765,7 @@
                 errorMsg.style.display = 'block';
             } finally {
                 confirmBtn.disabled = false;
-                confirmBtn.innerHTML = 'Bəli, Sil';
+                confirmBtn.innerHTML = '{{ t.edit_todo.modal_confirm }}';
             }
         }
     </script>

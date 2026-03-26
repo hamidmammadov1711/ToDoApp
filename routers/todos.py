@@ -9,7 +9,7 @@ from starlette.responses import RedirectResponse
 
 from dependencies import (
     db_dependency, user_dependency,
-    get_current_user_from_cookie
+    get_current_user_from_cookie, get_translations_from_cookie
 )
 from models import Todos
 
@@ -38,14 +38,16 @@ def redirect_to_login():
 ### Pages ###
 
 @router.get("/todo-page")
-async def render_todo_page(request: Request, db: db_dependency):
+async def render_todo_page(request: Request, db: db_dependency, skip: int = 0, limit: int = 50):
     """Todo siyahısı səhifəsini render edir."""
     user = await get_current_user_from_cookie(request)
     if user is None:
         return redirect_to_login()
 
-    todos = db.query(Todos).filter(Todos.owner_id == user.get("id")).all()
-    return templates.TemplateResponse(request, "todo.html", {"todos": todos, "user": user})
+    todos = db.query(Todos).filter(Todos.owner_id == user.get("id")).offset(skip).limit(limit).all()
+    t = get_translations_from_cookie(request)
+    lang = request.cookies.get("lang", "az")
+    return templates.TemplateResponse(request, "todo.html", {"todos": todos, "user": user, "t": t, "lang": lang})
 
 
 @router.get("/add-todo-page")
@@ -54,7 +56,9 @@ async def render_add_todo_page(request: Request):
     user = await get_current_user_from_cookie(request)
     if user is None:
         return redirect_to_login()
-    return templates.TemplateResponse(request, "add-todo.html", {"user": user})
+    t = get_translations_from_cookie(request)
+    lang = request.cookies.get("lang", "az")
+    return templates.TemplateResponse(request, "add-todo.html", {"user": user, "t": t, "lang": lang})
 
 
 @router.get("/edit-todo-page/{todo_id}")
@@ -65,16 +69,18 @@ async def render_edit_todo_page(request: Request, todo_id: int, db: db_dependenc
         return redirect_to_login()
 
     todo = db.query(Todos).filter(Todos.id == todo_id).first()
-    return templates.TemplateResponse(request, "edit-todo.html", {"todo": todo, "user": user})
+    t = get_translations_from_cookie(request)
+    lang = request.cookies.get("lang", "az")
+    return templates.TemplateResponse(request, "edit-todo.html", {"todo": todo, "user": user, "t": t, "lang": lang})
 
 
 ### Endpoints ###
 @router.get("/", status_code=status.HTTP_200_OK)
-async def read_all(user: user_dependency, db: db_dependency):
-    """Bütün todoları qaytarır."""
+async def read_all(user: user_dependency, db: db_dependency, skip: int = 0, limit: int = 50):
+    """Bütün todoları qaytarır (səhifələmə ilə)."""
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication Failed')
-    return db.query(Todos).filter(Todos.owner_id == user.get('id')).all()
+    return db.query(Todos).filter(Todos.owner_id == user.get('id')).offset(skip).limit(limit).all()
 
 
 @router.get("/todo/{todo_id}", status_code=status.HTTP_200_OK)

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yeni Tapşırıq Əlavə Et - Todo App</title>
+    <title>{{ t.add_todo.page_title }}</title>
     <style>
         * {
             margin: 0;
@@ -338,11 +338,15 @@
 
 </head>
 <body>
+<div class="lang-switcher" style="position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 20px; backdrop-filter: blur(10px);">
+    <a href="/set-language/az" style="text-decoration: none; font-size: 22px; margin-right: 8px; opacity: {% if lang == 'az' %}1{% else %}0.5{% endif %}; transition: opacity 0.3s;" title="Azərbaycanca">🇦🇿</a>
+    <a href="/set-language/en" style="text-decoration: none; font-size: 22px; opacity: {% if lang == 'en' %}1{% else %}0.5{% endif %}; transition: opacity 0.3s;" title="English">🇬🇧</a>
+</div>
 <div class="container">
     <div class="header">
         <div class="header-icon">📝</div>
-        <h1>Yeni Tapşırıq</h1>
-        <p class="subtitle">Yeni tapşırıq əlavə edin</p>
+        <h1>{{ t.add_todo.header }}</h1>
+        <p class="subtitle">{{ t.add_todo.subtitle }}</p>
     </div>
 
     <div id="errorMsg" class="error-message"></div>
@@ -350,41 +354,41 @@
 
     <form id="todoForm">
         <div class="form-group">
-            <label for="title">Başlıq <span class="required">*</span></label>
+            <label for="title">{{ t.add_todo.title_label }} <span class="required">*</span></label>
             <input type="text" id="title" name="title" required minlength="3"
-                   placeholder="Tapşırıq başlığı (min. 3 simvol)">
+                   placeholder="{{ t.add_todo.title_placeholder }}">
         </div>
 
         <div class="form-group">
-            <label for="description">Təsvir <span class="required">*</span></label>
+            <label for="description">{{ t.add_todo.desc_label }} <span class="required">*</span></label>
             <textarea id="description" name="description" required minlength="3" maxlength="100"
-                      placeholder="Tapşırıq təsviri (min. 3, max. 100 simvol)"></textarea>
+                      placeholder="{{ t.add_todo.desc_placeholder }}"></textarea>
             <div class="char-counter" id="charCounter">0 / 100</div>
         </div>
 
         <div class="form-group">
-            <label for="priority">Prioritet <span class="required">*</span></label>
+            <label for="priority">{{ t.add_todo.priority_label }} <span class="required">*</span></label>
             <div class="priority-wrapper">
                 <input type="range" id="priority" name="priority" class="priority-slider"
                        min="1" max="5" value="1">
                 <div class="priority-value level-1" id="priorityValue">1</div>
             </div>
             <div class="priority-labels">
-                <span>Çox aşağı</span>
-                <span>Çox yüksək</span>
+                <span>{{ t.add_todo.priority_low }}</span>
+                <span>{{ t.add_todo.priority_high }}</span>
             </div>
         </div>
 
         <div class="checkbox-group" onclick="document.getElementById('complete').click()">
             <input type="checkbox" id="complete" name="complete">
-            <label class="checkbox-label" for="complete">Dərhal tamamlandı kimi işarələ</label>
+            <label class="checkbox-label" for="complete">{{ t.add_todo.complete_label }}</label>
         </div>
 
         <div class="button-group">
             <button type="submit" class="btn-primary" id="submitBtn">
-                <span>💾 Yadda Saxla</span>
+                <span>{{ t.add_todo.btn_save }}</span>
             </button>
-            <a href="/todos/todo-page" class="btn btn-secondary">❌ İmtina</a>
+            <a href="/todos/todo-page" class="btn btn-secondary">{{ t.add_todo.btn_cancel }}</a>
         </div>
     </form>
 </div>
@@ -463,7 +467,7 @@
 
         // Show loading state
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<div class="spinner"></div><span>Göndərilir...</span>';
+        submitBtn.innerHTML = '<div class="spinner"></div><span>{{ t.add_todo.btn_loading }}</span>';
 
         try {
             const response = await fetch('/todos/todo', {
@@ -493,13 +497,13 @@
                 errorMsg.textContent = '❌ Xəta: ' + (data.detail || 'Naməlum xəta baş verdi');
                 errorMsg.style.display = 'block';
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = '<span>💾 Yadda Saxla</span>';
+                submitBtn.innerHTML = '<span>{{ t.add_todo.btn_save }}</span>';
             }
         } catch (error) {
             errorMsg.textContent = '❌ Şəbəkə xətası: ' + error.message;
             errorMsg.style.display = 'block';
             submitBtn.disabled = false;
-            submitBtn.innerHTML = '<span>💾 Yadda Saxla</span>';
+            submitBtn.innerHTML = '<span>{{ t.add_todo.btn_save }}</span>';
         }
     });
 </script>

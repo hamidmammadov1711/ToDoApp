@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daxil Ol - Todo App</title>
+    <title>{{ t.login.page_title }}</title>
     <style>
         * {
             margin: 0;
@@ -206,11 +206,15 @@
     </style>
 </head>
 <body>
+<div class="lang-switcher" style="position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 20px; backdrop-filter: blur(10px);">
+    <a href="/set-language/az" style="text-decoration: none; font-size: 22px; margin-right: 8px; opacity: {% if lang == 'az' %}1{% else %}0.5{% endif %}; transition: opacity 0.3s;" title="Azərbaycanca">🇦🇿</a>
+    <a href="/set-language/en" style="text-decoration: none; font-size: 22px; opacity: {% if lang == 'en' %}1{% else %}0.5{% endif %}; transition: opacity 0.3s;" title="English">🇬🇧</a>
+</div>
 <div class="container">
     <div class="header">
         <div class="header-icon">🔐</div>
-        <h1>Daxil Ol</h1>
-        <p class="subtitle">Hesabınıza daxil olun</p>
+        <h1>{{ t.login.header }}</h1>
+        <p class="subtitle">{{ t.login.subtitle }}</p>
     </div>
 
     <div id="errorMsg" class="error-message"></div>
@@ -218,27 +222,27 @@
 
     <form id="loginForm">
         <div class="form-group">
-            <label for="username">İstifadəçi adı</label>
+            <label for="username">{{ t.login.username_label }}</label>
             <input type="text" id="username" name="username" required
-                   placeholder="İstifadəçi adınızı daxil edin" autocomplete="username">
+                   placeholder="{{ t.login.username_placeholder }}" autocomplete="username">
         </div>
 
         <div class="form-group">
-            <label for="password">Şifrə</label>
+            <label for="password">{{ t.login.password_label }}</label>
             <input type="password" id="password" name="password" required
-                   placeholder="Şifrənizi daxil edin" autocomplete="current-password">
+                   placeholder="{{ t.login.password_placeholder }}" autocomplete="current-password">
         </div>
 
         <div class="button-group">
             <button type="submit" class="btn-primary" id="submitBtn">
-                <span>🚀 Daxil Ol</span>
+                <span>{{ t.login.btn_submit }}</span>
             </button>
         </div>
     </form>
 
     <div class="footer">
-        <p style="color: #888; font-size: 14px;">Hesabınız yoxdur?
-            <a href="/auth/register-page">Qeydiyyatdan keçin</a>
+        <p style="color: #888; font-size: 14px;">{{ t.login.no_account }}
+            <a href="/auth/register-page">{{ t.login.register_link }}</a>
         </p>
     </div>
 </div>
@@ -265,7 +269,7 @@
 
         // Show loading
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<div class="spinner"></div><span>Daxil olunur...</span>';
+        submitBtn.innerHTML = '<div class="spinner"></div><span>{{ t.login.btn_loading }}</span>';
 
         const payload = new URLSearchParams();
         payload.append('username', username);
@@ -294,13 +298,13 @@
                 errorMsg.textContent = '❌ ' + (errorData.detail || 'Daxil olmaq mümkün olmadı.');
                 errorMsg.style.display = 'block';
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = '<span>🚀 Daxil Ol</span>';
+                submitBtn.innerHTML = '<span>{{ t.login.btn_submit }}</span>';
             }
         } catch (error) {
             errorMsg.textContent = '❌ Şəbəkə xətası: ' + error.message;
             errorMsg.style.display = 'block';
             submitBtn.disabled = false;
-            submitBtn.innerHTML = '<span>🚀 Daxil Ol</span>';
+            submitBtn.innerHTML = '<span>{{ t.login.btn_submit }}</span>';
         }
     });
 </script>

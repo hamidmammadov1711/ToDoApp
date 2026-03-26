@@ -1,0 +1,10 @@
+venv/
+__pycache__/
+*.pyc
+.env
+.idea/
+.pytest_cache/
+todoapp.db
+testdb.db
+identifier.sqlite
+assets/

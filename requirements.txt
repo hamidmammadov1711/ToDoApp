@@ -16,3 +16,6 @@ jinja2
 starlette
 pydantic
 python-dotenv
+slowapi
+alembic
+loguru

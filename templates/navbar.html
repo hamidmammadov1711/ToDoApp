@@ -1,6 +1,6 @@
 <div>
   <nav class="navbar navbar-expand-md navbar-dark main-color fixed-top">
-    <a class="navbar-brand" href="#">Todo App</a>
+    <a class="navbar-brand" href="#">{{ t.nav.app_name }}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -9,15 +9,24 @@
       <ul class="navbar-nav">
         {% if user %}
         <li class="nav-item active">
-          <a class="nav-link" href="/todos/todo-page">Home</a>
+          <a class="nav-link" href="/todos/todo-page">{{ t.nav.home }}</a>
         </li>
         {% endif %}
       </ul>
 
       <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown m-1">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="langDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; padding: 6px 14px;">
+            🌍 {{ lang|upper }}
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="langDropdown">
+            <a class="dropdown-item" href="/set-language/en">🇺🇸 English</a>
+            <a class="dropdown-item" href="/set-language/az">🇦🇿 Azərbaycan</a>
+          </div>
+        </li>
         {% if user %}
         <li class="nav-item m-1">
-          <a type="button" class="btn btn-outline-light text-white" onclick="logout()">Logout</a>
+          <a type="button" class="btn btn-outline-light text-white" onclick="logout()">{{ t.nav.logout }}</a>
         </li>
         {% endif %}
       </ul>

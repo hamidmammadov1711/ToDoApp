@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tapşırıqlarım - Todo App</title>
+    <title>{{ t.todo.page_title }}</title>
     <style>
         * {
             margin: 0;
@@ -306,19 +306,25 @@
                 {% endif %}
             </div>
         </div>
-        <button class="btn-logout" onclick="logout()">🚪 Çıxış</button>
+        <div class="top-bar-right" style="display: flex; align-items: center; gap: 15px;">
+            <div class="lang-switcher" style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 20px; backdrop-filter: blur(10px);">
+                <a href="/set-language/az" style="text-decoration: none; font-size: 20px; margin-right: 8px; opacity: {% if lang == 'az' %}1{% else %}0.5{% endif %};" title="Azərbaycanca">🇦🇿</a>
+                <a href="/set-language/en" style="text-decoration: none; font-size: 20px; opacity: {% if lang == 'en' %}1{% else %}0.5{% endif %};" title="English">🇬🇧</a>
+            </div>
+            <button class="btn-logout" onclick="logout()">{{ t.todo.logout }}</button>
+        </div>
     </div>
 
     <!-- Main Card -->
     <div class="main-card">
         <div class="card-header">
             <div>
-                <h2>📋 Tapşırıqlarım</h2>
+                <h2>{{ t.todo.header }}</h2>
                 {% if todos %}
-                <span class="todo-count">{{ todos|length }} tapşırıq</span>
+                <span class="todo-count">{{ todos|length }} {{ t.todo.task_count }}</span>
                 {% endif %}
             </div>
-            <a href="/todos/add-todo-page" class="btn-add">➕ Yeni Tapşırıq</a>
+            <a href="/todos/add-todo-page" class="btn-add">{{ t.todo.btn_add }}</a>
         </div>
 
         <div class="todo-list">
@@ -331,19 +337,19 @@
                         <div class="todo-desc">{{ todo.description }}</div>
                     </div>
                     {% if todo.complete %}
-                    <span class="todo-status status-done">✓ Tamamlandı</span>
+                    <span class="todo-status status-done">{{ t.todo.status_done }}</span>
                     {% else %}
-                    <span class="todo-status status-pending">⏳ Gözləyir</span>
+                    <span class="todo-status status-pending">{{ t.todo.status_pending }}</span>
                     {% endif %}
-                    <a href="/todos/edit-todo-page/{{ todo.id }}" class="btn-edit">✏️ Redaktə</a>
+                    <a href="/todos/edit-todo-page/{{ todo.id }}" class="btn-edit">{{ t.todo.btn_edit }}</a>
                 </div>
                 {% endfor %}
             {% else %}
                 <div class="empty-state">
                     <div class="empty-icon">📝</div>
-                    <h3>Tapşırıq Yoxdur</h3>
-                    <p>Hələ heç bir tapşırıq əlavə etməmisiniz.</p>
-                    <a href="/todos/add-todo-page" class="btn-add">➕ İlk tapşırığınızı əlavə edin</a>
+                    <h3>{{ t.todo.empty_header }}</h3>
+                    <p>{{ t.todo.empty_desc }}</p>
+                    <a href="/todos/add-todo-page" class="btn-add">{{ t.todo.empty_btn }}</a>
                 </div>
             {% endif %}
         </div>

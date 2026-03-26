@@ -1,6 +1,8 @@
 """Bu modul, FastAPI tətbiqində istifadəçi autentifikasiyası və verilənlər bazası sessiyasını idarə etmək üçün istifadə olunan funksiyaları və asılılıqları ehtiva edir."""
 
 import os
+import json
+from pathlib import Path
 from typing import Annotated, Optional
 
 from dotenv import load_dotenv
@@ -92,3 +94,27 @@ async def get_current_user_from_cookie(request: Request) -> Optional[dict]:
         return {"username": username, "id": user_id, "user_role": user_role}
     except JWTError:
         return None
+
+# ==================== 3. i18n (TƏRCÜMƏ) UYĞUNLAŞMASI ====================
+
+LOCALES_DIR = Path(__file__).parent / "locales"
+TRANSLATIONS = {}
+
+for _lang in ["en", "az"]:
+    locale_file = LOCALES_DIR / f"{_lang}.json"
+    if locale_file.exists():
+        with open(locale_file, "r", encoding="utf-8") as f:
+            TRANSLATIONS[_lang] = json.load(f)
+    else:
+        TRANSLATIONS[_lang] = {}
+
+def get_translations_from_cookie(request: Request) -> dict:
+    """
+    Cookie-dən "lang" oxuyur, yoxdursa "az" olaraq təyin edir.
+    Müvafiq tərcümə lüğətini qaytarır.
+    """
+    lang = request.cookies.get("lang", "az")
+    if lang not in TRANSLATIONS:
+        lang = "az"
+    return TRANSLATIONS[lang]
+

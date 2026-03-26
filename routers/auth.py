@@ -14,9 +14,10 @@ from starlette import status
 
 from dependencies import (
     SECRET_KEY, ALGORITHM, bcrypt_context, db_dependency,
-    authenticate_user
+    authenticate_user, get_translations_from_cookie
 )
 from models import Users
+from limiter import limiter
 
 router = APIRouter(
     prefix='/auth',
@@ -47,13 +48,17 @@ templates = Jinja2Templates(directory="templates")
 @router.get("/login-page")
 def render_login_page(request: Request):
     """Login səhifəsini render edir."""
-    return templates.TemplateResponse(request, "login.html")
+    t = get_translations_from_cookie(request)
+    lang = request.cookies.get("lang", "az")
+    return templates.TemplateResponse(request, "login.html", {"t": t, "lang": lang})
 
 
 @router.get("/register-page")
 def render_register_page(request: Request):
     """Register səhifəsini render edir."""
-    return templates.TemplateResponse(request, "register.html")
+    t = get_translations_from_cookie(request)
+    lang = request.cookies.get("lang", "az")
+    return templates.TemplateResponse(request, "register.html", {"t": t, "lang": lang})
 
 
 ### Endpoints ###
@@ -67,7 +72,8 @@ def create_access_token(username: str, user_id: int, role: str, expires_delta: t
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
-async def create_user(db: db_dependency,
+@limiter.limit("5/minute")
+async def create_user(request: Request, db: db_dependency,
                       create_user_request: CreateUserRequest):
     """Yeni istifadəçi yaradır."""
     create_user_model = Users(
@@ -86,7 +92,8 @@ async def create_user(db: db_dependency,
 
 
 @router.post("/token", response_model=Token)
-async def login_for_access_token(response: Response,
+@limiter.limit("5/minute")
+async def login_for_access_token(request: Request, response: Response,
                                  form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
                                  db: db_dependency):
     """İstifadəçi girişi üçün JWT token qaytarır."""
