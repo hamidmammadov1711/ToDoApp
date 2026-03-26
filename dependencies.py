@@ -1,5 +1,5 @@
-"""Bu modul, FastAPI tətbiqində istifadəçi autentifikasiyası və verilənlər bazası sessiyasını idarə etmək üçün istifadə olunan funksiyaları və asılılıqları ehtiva edir."""
-
+"""This module contains functions and dependencies used to manage user authentication
+ and database sessions in a FastAPI application."""
 import json
 import os
 from pathlib import Path
@@ -25,7 +25,7 @@ bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 def get_db():
-    """Verilənlər bazası sessiyası yaradır."""
+    """Creates a database session."""
     db = session_local()
     try:
         yield db
@@ -37,19 +37,19 @@ db_dependency = Annotated[Session, Depends(get_db)]
 
 
 def authenticate_user(username: str, password: str, db: Session):
-    """İstifadəçi adı və şifrə ilə autentifikasiya."""
+    """Authentication with username and password."""
     user = db.query(Users).filter(Users.username == username).first()
     if not user or not bcrypt_context.verify(password, str(user.hashed_password)):
         return False
     return user
 
 
-# ==================== 1. API ENDPOINTLƏR ÜÇÜN (admin.py, users.py) ====================
+# ==================== 1. FOR API ENDPOINTS (admin.py, users.py) ====================
 
 def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
     """
-    API endpoint-ləri üçün: Authorization header-dən token oxuyur.
-    Exception atır əgər token etibarsızdırsa (401).
+    For API endpoints: Reads token from Authorization header.
+    Throws exception if token is invalid (401).
     """
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
@@ -67,16 +67,16 @@ def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
                             detail="Could not validate credentials")
 
 
-# API endpoint-ləri üçün type alias (admin.py, users.py buna istinad edir)
+# Type alias for API endpoints (admin.py, users.py refer to this)
 user_dependency = Annotated[dict, Depends(get_current_user)]
 
 
-# ==================== 2. WEB SƏHİFƏLƏR ÜÇÜN (todos.py) ====================
+# ==================== 2. FOR WEB PAGES (todos.py) ====================
 
 async def get_current_user_from_cookie(request: Request) -> Optional[dict]:
     """
-    Web səhifələri üçün: Cookie-dən token oxuyur.
-    Exception ATMIR, əksinə None qaytarır (redirect etmək üçün).
+    For web pages: Reads token from cookie.
+    It DOES NOT throw an Exception, but instead returns None (to redirect).
     """
     token = request.cookies.get("access_token")
     if not token:
@@ -96,7 +96,7 @@ async def get_current_user_from_cookie(request: Request) -> Optional[dict]:
         return None
 
 
-# ==================== 3. i18n (TƏRCÜMƏ) UYĞUNLAŞMASI ====================
+# ==================== 3. i18n (TRANSLATE) COMPATIBILITY ====================
 
 LOCALES_DIR = Path(__file__).parent / "locales"
 TRANSLATIONS = {}
@@ -112,8 +112,8 @@ for _lang in ["en", "az"]:
 
 def get_translations_from_cookie(request: Request) -> dict:
     """
-    Cookie-dən "lang" oxuyur, yoxdursa "az" olaraq təyin edir.
-    Müvafiq tərcümə lüğətini qaytarır.
+    Reads "lang" from cookie, sets it to "az" if not present.
+    Returns the corresponding translation dictionary.
     """
     lang = request.cookies.get("lang", "az")
     if lang not in TRANSLATIONS:

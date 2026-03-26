@@ -1,6 +1,6 @@
 from jose import jwt, JWTError
 
-# Test üçün şərti parametrlər
+# Conditional parameters for testing
 SECRET_KEY = "supersecret"
 ALGORITHM = "HS256"
 

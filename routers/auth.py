@@ -1,6 +1,4 @@
-"""Bu modul istifadəçi qeydiyyatı və giriş üçün API endpoint-lərini təmin edir. İki əsas endpoint var:
-1. POST /auth/ - Yeni istifadəçi yaratmaq üçün istifadə olunur.
-2. POST /auth/token - İstifadəçi girişini təmin etmək üçün istifadə olunur."""
+"""This module provides API endpoints for user registration and login."""
 
 from datetime import timedelta, datetime, timezone
 from typing import Annotated
@@ -47,7 +45,7 @@ templates = Jinja2Templates(directory="templates")
 
 @router.get("/login-page")
 def render_login_page(request: Request):
-    """Login səhifəsini render edir."""
+    """Renders the login page."""
     t = get_translations_from_cookie(request)
     lang = request.cookies.get("lang", "az")
     return templates.TemplateResponse(request, "login.html", {"t": t, "lang": lang})
@@ -55,7 +53,7 @@ def render_login_page(request: Request):
 
 @router.get("/register-page")
 def render_register_page(request: Request):
-    """Register səhifəsini render edir."""
+    """Renders the register page."""
     t = get_translations_from_cookie(request)
     lang = request.cookies.get("lang", "az")
     return templates.TemplateResponse(request, "register.html", {"t": t, "lang": lang})
@@ -64,7 +62,7 @@ def render_register_page(request: Request):
 ### Endpoints ###
 
 def create_access_token(username: str, user_id: int, role: str, expires_delta: timedelta):
-    """JWT token yaradır."""
+    """Generates a JWT token."""
     encode = {'sub': username, 'id': user_id, 'role': role}
     expires = datetime.now(timezone.utc) + expires_delta
     encode.update({'exp': expires})
@@ -75,7 +73,7 @@ def create_access_token(username: str, user_id: int, role: str, expires_delta: t
 # @limiter.limit("5/minute")
 async def create_user(request: Request, db: db_dependency,
                       create_user_request: CreateUserRequest):
-    """Yeni istifadəçi yaradır."""
+    """Creates a new user."""
     create_user_model = Users(
         email=create_user_request.email,
         username=create_user_request.username,
@@ -96,7 +94,7 @@ async def create_user(request: Request, db: db_dependency,
 async def login_for_access_token(request: Request, response: Response,
                                  form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
                                  db: db_dependency):
-    """İstifadəçi girişi üçün JWT token qaytarır."""
+    """Returns a JWT token for user login."""
     user = authenticate_user(form_data.username, form_data.password, db)
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Could not validate user.')

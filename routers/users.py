@@ -1,5 +1,5 @@
-"""Bu kod parçası, istifadəçilərlə əlaqəli prosesləri idarə etmək üçün istifadə edilir.
-İstifadəçi məlumatlarını almaq, şifrə dəyişdirmək və telefon nömrəsini yeniləmək üçün endpointlər."""
+"""This piece of code is used to manage processes related to users.
+Endpoints for retrieving user information, changing password, and updating phone number."""
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
@@ -21,7 +21,7 @@ class UserVerification(BaseModel):
 
 @router.get('/', status_code=status.HTTP_200_OK)
 async def get_user(user: user_dependency, db: db_dependency):
-    """İstifadəçi məlumatlarını qaytarır."""
+    """Returns user data"""
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication Failed')
     return db.query(Users).filter(Users.id == user.get('id')).first()
@@ -30,7 +30,7 @@ async def get_user(user: user_dependency, db: db_dependency):
 @router.put("/password", status_code=status.HTTP_204_NO_CONTENT)
 async def change_password(user: user_dependency, db: db_dependency,
                           user_verification: UserVerification):
-    """İstifadəçi şifrəsini dəyişdirir."""
+    """The user changes their password"""
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication Failed')
     user_model = db.query(Users).filter(Users.id == user.get('id')).first()
@@ -45,7 +45,7 @@ async def change_password(user: user_dependency, db: db_dependency,
 @router.put("/phonenumber/{phone_number}", status_code=status.HTTP_204_NO_CONTENT)
 async def change_phone_number(user: user_dependency, db: db_dependency,
                               phone_number: str):
-    """Telefon nömrəsini yeniləyir."""
+    """Updating phone number"""
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication Failed')
     user_model = db.query(Users).filter(Users.id == user.get('id')).first()

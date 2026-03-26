@@ -1,5 +1,5 @@
-"""Bu kod parçacığı, FastAPI istifadə edərək bir "Todo" tətbiqinin API marşrutlarını təyin edir.
-CRUD (Yarat, Oxu, Yenilə, Sil) əməliyyatlarını həyata keçirir."""
+"""This code snippet defines the API routes for a "Todo" application using FastAPI.
+It performs CRUD (Create, Read, Update, Delete) operations."""
 
 from fastapi import APIRouter, HTTPException, Path, Request
 from fastapi.templating import Jinja2Templates
@@ -29,7 +29,7 @@ class TodoRequest(BaseModel):
 
 
 def redirect_to_login():
-    """Login səhifəsinə yönləndirmə."""
+    """Redirect to the login page."""
     redirect_response = RedirectResponse(url="/auth/login-page", status_code=status.HTTP_302_FOUND)
     redirect_response.delete_cookie(key="access_token")
     return redirect_response
@@ -39,7 +39,7 @@ def redirect_to_login():
 
 @router.get("/todo-page")
 async def render_todo_page(request: Request, db: db_dependency, skip: int = 0, limit: int = 50):
-    """Todo siyahısı səhifəsini render edir."""
+    """Renders the todo list page."""
     user = await get_current_user_from_cookie(request)
     if user is None:
         return redirect_to_login()
@@ -52,7 +52,7 @@ async def render_todo_page(request: Request, db: db_dependency, skip: int = 0, l
 
 @router.get("/add-todo-page")
 async def render_add_todo_page(request: Request):
-    """Yeni todo əlavə etmə səhifəsini render edir."""
+    """Renders the add new todo page."""
     user = await get_current_user_from_cookie(request)
     if user is None:
         return redirect_to_login()
@@ -63,7 +63,7 @@ async def render_add_todo_page(request: Request):
 
 @router.get("/edit-todo-page/{todo_id}")
 async def render_edit_todo_page(request: Request, todo_id: int, db: db_dependency):
-    """Todo redaktə səhifəsini render edir."""
+    """Renders the Todo edit page."""
     user = await get_current_user_from_cookie(request)
     if user is None:
         return redirect_to_login()
@@ -77,7 +77,7 @@ async def render_edit_todo_page(request: Request, todo_id: int, db: db_dependenc
 ### Endpoints ###
 @router.get("/", status_code=status.HTTP_200_OK)
 async def read_all(user: user_dependency, db: db_dependency, skip: int = 0, limit: int = 50):
-    """Bütün todoları qaytarır (səhifələmə ilə)."""
+    """Returns all todos (with pagination)."""
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication Failed')
     return db.query(Todos).filter(Todos.owner_id == user.get('id')).offset(skip).limit(limit).all()
@@ -85,7 +85,7 @@ async def read_all(user: user_dependency, db: db_dependency, skip: int = 0, limi
 
 @router.get("/todo/{todo_id}", status_code=status.HTTP_200_OK)
 async def read_todo(user: user_dependency, db: db_dependency, todo_id: int = Path(gt=0)):
-    """Tək bir todonu qaytarır."""
+    """Returns a single todo."""
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication Failed')
 
@@ -99,7 +99,7 @@ async def read_todo(user: user_dependency, db: db_dependency, todo_id: int = Pat
 @router.post("/todo", status_code=status.HTTP_201_CREATED)
 async def create_todo(user: user_dependency, db: db_dependency,
                       todo_request: TodoRequest):
-    """Yeni todo yaradır."""
+    """New todo is a wound."""
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication Failed')
     todo_model = Todos(**todo_request.model_dump(), owner_id=user.get('id'))
@@ -112,7 +112,7 @@ async def create_todo(user: user_dependency, db: db_dependency,
 async def update_todo(user: user_dependency, db: db_dependency,
                       todo_request: TodoRequest,
                       todo_id: int = Path(gt=0)):
-    """Todonu yeniləyir."""
+    """Updating Todo"""
     todo_model = db.query(Todos).filter(Todos.id == todo_id) \
         .filter(Todos.owner_id == user.get('id')).first()
     if todo_model is None:
@@ -129,7 +129,7 @@ async def update_todo(user: user_dependency, db: db_dependency,
 
 @router.delete("/todo/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_todo(user: user_dependency, db: db_dependency, todo_id: int = Path(gt=0)):
-    """Todonu silir."""
+    """Deleting a todo"""
     todo_model = db.query(Todos).filter(Todos.id == todo_id) \
         .filter(Todos.owner_id == user.get('id')).first()
     if todo_model is None:

@@ -1,4 +1,4 @@
-"""Bu modul, FastAPI istifadə edərək "admin" roluna sahib istifadəçilər üçün xüsusi endpointləri tanımlar."""
+"""This module defines special endpoints for users with the "admin" role using FastAPI."""
 
 from fastapi import APIRouter, HTTPException, Path
 from starlette import status
@@ -14,7 +14,7 @@ router = APIRouter(
 
 @router.get("/todo", status_code=status.HTTP_200_OK)
 async def read_all(user: user_dependency, db: db_dependency):
-    """Bütün todoları qaytarır (yalnız admin)."""
+    """Returns all todos (admin only)."""
     if user is None or user.get('user_role') != 'admin':
         raise HTTPException(status_code=401, detail='Authentication Failed')
     return db.query(Todos).all()
@@ -22,7 +22,7 @@ async def read_all(user: user_dependency, db: db_dependency):
 
 @router.delete("/todo/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_todo(user: user_dependency, db: db_dependency, todo_id: int = Path(gt=0)):
-    """Todonu silir (yalnız admin)."""
+    """Todo will be deleted (by the admin only)."""
     if user is None or user.get('user_role') != 'admin':
         raise HTTPException(status_code=401, detail='Authentication Failed')
     todo_model = db.query(Todos).filter(Todos.id == todo_id).first()

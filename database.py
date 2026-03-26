@@ -1,9 +1,10 @@
-"""Bu modul, SQLAlchemy istifadə edərək tətbiq üçün verilənlər bazası bağlantısını və sessiya idarəetməsini qurur. Verilənlər bazası URL-ni mühit dəyişənlərindən yükləyir, mühərrik yaradır və deklarativ modellər üçün sessiya fabriki və baza sinfi təyin edir."""
+"""This module uses SQLAlchemy to establish a database connection and session management for the application.
+It loads the database URL from environment variables,
+creates an engine, and defines a session factory and base class for declarative models."""
 import os
 
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
-# from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker
 
