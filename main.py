@@ -36,9 +36,11 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 @app.exception_handler(StarletteHTTPException)
 async def custom_http_exception_handler(request: Request, exc: StarletteHTTPException):
     if exc.status_code == 404:
-        t = get_translations_from_cookie(request)
-        lang = request.cookies.get("lang", "az")
-        return templates.TemplateResponse(request, "404.html", {"t": t, "lang": lang}, status_code=404)
+        accept = request.headers.get("accept", "")
+        if "text/html" in accept:
+            t = get_translations_from_cookie(request)
+            lang = request.cookies.get("lang", "az")
+            return templates.TemplateResponse(request, "404.html", {"t": t, "lang": lang}, status_code=404)
     return JSONResponse({"detail": exc.detail}, status_code=exc.status_code)
 
 @app.get("/")
