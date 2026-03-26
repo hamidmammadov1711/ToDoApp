@@ -10,10 +10,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     
     - name: Set up Python 3.9
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.9'
         cache: 'pip'
@@ -24,5 +24,7 @@ jobs:
         pip install -r requirements.txt
         
     - name: Run Pytest
+      env:
+        PYTHONPATH: .
       run: |
         python -m pytest test/ -v
