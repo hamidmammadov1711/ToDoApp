@@ -10,7 +10,8 @@ from sqlalchemy.orm import sessionmaker
 # Load environment variables from .env file
 load_dotenv()
 
-SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
+# Provide a fallback for environments without a .env file (like GitHub Actions)
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./todoapp.db")
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 

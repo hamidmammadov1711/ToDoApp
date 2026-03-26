@@ -1,7 +1,7 @@
 """Bu modul, FastAPI tətbiqində istifadəçi autentifikasiyası və verilənlər bazası sessiyasını idarə etmək üçün istifadə olunan funksiyaları və asılılıqları ehtiva edir."""
 
-import os
 import json
+import os
 from pathlib import Path
 from typing import Annotated, Optional
 

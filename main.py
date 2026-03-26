@@ -1,20 +1,21 @@
 """ FastAPI layihəsi üçün main (əsas) tətbiq faylı. Bu fayl FastAPI tətbiqini işə salır, verilənlər bazasını qurur və identifikasiya və todo idarəetməsi üçün marşrutlaşdırıcıları ehtiva edir. Lazımi modulları idxal edir, müəyyən edilmiş modellərə əsasən verilənlər bazası cədvəllərini yaradır və istifadəçi identifikasiyası və todo əməliyyatları ilə əlaqəli API sorğularını idarə etmək üçün identifikasiya və todo marşrutlaşdırıcılarını ehtiva edir. """
 
+import time
+
 from fastapi import FastAPI, Request, status
 from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from starlette.exceptions import HTTPException as StarletteHTTPException
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
-from limiter import limiter
-import time
-from logger import logger
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from database import engine
+from dependencies import get_translations_from_cookie
+from limiter import limiter
+from logger import logger
 from models import Base
 from routers import auth, todos, admin, users
-from dependencies import get_translations_from_cookie
 
 app = FastAPI()
 app.state.limiter = limiter

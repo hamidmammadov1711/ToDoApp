@@ -6,11 +6,11 @@ services:
     container_name: todoapp_web
     ports:
       - "8000:8000"
+
     environment:
-      - DATABASE_URL=sqlite:///./todoapp.db
+      - TZ=Asia/Baku
+    env_file:
+      - .env
     restart: unless-stopped
     volumes:
-      - todoapp_data:/app
-
-volumes:
-  todoapp_data:
+      - .:/app

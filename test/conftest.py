@@ -12,9 +12,9 @@ from sqlalchemy.orm import sessionmaker
 from starlette.testclient import TestClient
 
 from database import Base
+from dependencies import bcrypt_context
 from main import app
 from models import Todos, Users
-from dependencies import bcrypt_context
 
 DATABASE_URL = "sqlite:///./testdb.db"
 

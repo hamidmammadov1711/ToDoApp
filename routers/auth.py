@@ -16,8 +16,8 @@ from dependencies import (
     SECRET_KEY, ALGORITHM, bcrypt_context, db_dependency,
     authenticate_user, get_translations_from_cookie
 )
-from models import Users
 from limiter import limiter
+from models import Users
 
 router = APIRouter(
     prefix='/auth',
@@ -72,7 +72,7 @@ def create_access_token(username: str, user_id: int, role: str, expires_delta: t
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
-@limiter.limit("5/minute")
+# @limiter.limit("5/minute")
 async def create_user(request: Request, db: db_dependency,
                       create_user_request: CreateUserRequest):
     """Yeni istifadəçi yaradır."""
