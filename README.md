@@ -7,7 +7,7 @@
   <em>Sürətli, Təhlükəsiz və Müasir Tapşırıqlar İdarəetmə Sistemi</em>
   <br/><br/>
   
-  [![Version](https://img.shields.io/badge/version-v1.0.0-blue.svg)](https://github.com/hamidmammadov/ToDoApp/releases)
+  [![Version](https://img.shields.io/badge/version-v1.0.1-blue.svg)](https://github.com/hamidmammadov/ToDoApp/releases)
   [![License](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
   [![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
   [![FastAPI](https://img.shields.io/badge/FastAPI-Framework-009688.svg?logo=fastapi)](https://fastapi.tiangolo.com)
@@ -39,11 +39,30 @@ The application has been thoroughly tested using an automated browser subagent t
 - **Performance & Observability:** Implemented API **Pagination** for optimal load times and **Loguru Middleware** for comprehensive, color-coded terminal logging and background file persistence.
 
 ### 🛠️ Tech Stack
-- **Backend:** Python 3.9+, FastAPI, Pydantic, Passlib, python-jose, SQLAlchemy, Pytest
+- **Backend:** Python 3.14+, FastAPI, Pydantic, Passlib, python-jose, SQLAlchemy, Pytest
 - **Frontend:** HTML5, CSS3, Jinja2, Bootstrap 5
 - **Database:** SQLite (Default) / PostgreSQL ready, Alembic for Migrations
 
 ### 🚀 Setup Instructions
+
+#### 🐳 Recommended: Docker Setup
+The easiest and most reliable way to run the application is using Docker. Ensure Docker and Docker Compose are installed on your machine.
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/yourusername/ToDoApp.git
+   cd ToDoApp
+   ```
+
+2. **Start the application:**
+   ```bash
+   docker compose up -d
+   ```
+   The application will be automatically built and available at: `http://localhost:8000`
+
+---
+
+#### ⚙️ Alternative: Manual Setup
 
 1. **Clone the repository:**
    ```bash
@@ -108,6 +127,25 @@ Tətbiq, əsas funksiyaların (CRUD əməliyyatları) və yeni çoxdillilik (İn
 
 ### 🚀 Quraşdırma Təlimatları
 
+#### 🐳 Tövsiyə Olunur: Docker ilə Quraşdırma
+Tətbiqi işə salmağın ən asan və etibarlı yolu Docker istifadə etməkdir. Kompüterinizdə Docker və Docker Compose-un quraşdırıldığından əmin olun.
+
+1. **Repozitoriyanı endirin:**
+   ```bash
+   git clone https://github.com/yourusername/ToDoApp.git
+   cd ToDoApp
+   ```
+
+2. **Tətbiqi işə salın:**
+   ```bash
+   docker compose up -d
+   ```
+   Tətbiq avtomatik qurulacaq və bu ünvanda əlçatan olacaq: `http://localhost:8000`
+
+---
+
+#### ⚙️ Alternativ: Əllə Quraşdırma (Manual Setup)
+
 1. **Repozitoriyanı endirin:**
    ```bash
    git clone https://github.com/yourusername/ToDoApp.git
@@ -140,4 +178,4 @@ Tətbiq, əsas funksiyaların (CRUD əməliyyatları) və yeni çoxdillilik (İn
 Bu layihə [MIT Lisenziyası](LICENSE) altında lisenziyalaşdırılmışdır. Müəllif hüquqları &copy; 2026 Hamid Mammadov.
 
 ---
-*Developed with ❤️ by Hamid Mammadov | Version 1.0.0*
+*Developed with ❤️ by Hamid Mammadov | Version 1.0.1*
