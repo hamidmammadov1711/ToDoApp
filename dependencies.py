@@ -16,8 +16,8 @@ from database import session_local
 from models import Users
 
 load_dotenv()
-SECRET_KEY = os.getenv("SECRET_KEY")
-ALGORITHM = os.getenv("ALGORITHM")
+SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret-key-for-tests")
+ALGORITHM = os.getenv("ALGORITHM", "HS256")
 
 oauth2_bearer = OAuth2PasswordBearer(tokenUrl="auth/token")
 
@@ -95,6 +95,7 @@ async def get_current_user_from_cookie(request: Request) -> Optional[dict]:
     except JWTError:
         return None
 
+
 # ==================== 3. i18n (TƏRCÜMƏ) UYĞUNLAŞMASI ====================
 
 LOCALES_DIR = Path(__file__).parent / "locales"
@@ -108,6 +109,7 @@ for _lang in ["en", "az"]:
     else:
         TRANSLATIONS[_lang] = {}
 
+
 def get_translations_from_cookie(request: Request) -> dict:
     """
     Cookie-dən "lang" oxuyur, yoxdursa "az" olaraq təyin edir.
@@ -117,4 +119,3 @@ def get_translations_from_cookie(request: Request) -> dict:
     if lang not in TRANSLATIONS:
         lang = "az"
     return TRANSLATIONS[lang]
-
