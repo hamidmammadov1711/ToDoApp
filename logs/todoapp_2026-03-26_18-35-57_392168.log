@@ -1,0 +1,8 @@
+2026-03-26 18:35:58 | INFO     | main:log_requests:30 - testclient - "GET /admin/todo" 200 (0.0397s)
+2026-03-26 18:35:58 | INFO     | main:log_requests:30 - testclient - "DELETE /admin/todo/1" 204 (0.0438s)
+2026-03-26 18:35:58 | INFO     | main:log_requests:30 - testclient - "DELETE /admin/todo/9999" 404 (0.0099s)
+2026-03-26 18:35:59 | INFO     | main:log_requests:30 - testclient - "GET /user" 307 (0.0005s)
+2026-03-26 18:35:59 | INFO     | main:log_requests:30 - testclient - "GET /user/" 200 (0.0220s)
+2026-03-26 18:36:00 | INFO     | main:log_requests:30 - testclient - "PUT /user/password" 204 (0.8948s)
+2026-03-26 18:36:01 | INFO     | main:log_requests:30 - testclient - "PUT /user/password" 401 (0.4291s)
+2026-03-26 18:36:02 | INFO     | main:log_requests:30 - testclient - "PUT /user/phonenumber/2222222222" 204 (0.0550s)

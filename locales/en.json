@@ -97,5 +97,40 @@
     "modal_confirm": "Yes, Delete",
     "modal_cancel": "No",
     "modal_loading": "Deleting..."
+  },
+  "admin": {
+    "page_title": "Admin Dashboard - Todo App",
+    "header": "👑 Admin Dashboard",
+    "btn_delete": "🗑️ Delete",
+    "modal_header": "⚠️ Delete Task",
+    "modal_desc": "Are you sure you want to delete this task? (Deleting as admin)",
+    "modal_confirm": "Yes, Delete",
+    "modal_cancel": "No",
+    "modal_loading": "Deleting...",
+    "empty_header": "No Tasks Found",
+    "empty_desc": "No tasks exist in the system.",
+    "task_count": "total tasks"
+  },
+  "profile": {
+    "page_title": "My Profile - Todo App",
+    "header": "👤 My Profile",
+    "user_info_header": "User Information",
+    "username": "Username",
+    "email": "Email",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "role": "Role",
+    "phone": "Phone",
+    "change_phone_header": "📱 Update Phone Number",
+    "phone_label": "New Phone",
+    "phone_placeholder": "+1 XXX XXX XXXX",
+    "btn_update_phone": "Update Phone",
+    "change_password_header": "🔐 Change Password",
+    "old_password_label": "Old Password",
+    "old_password_placeholder": "Enter current password",
+    "new_password_label": "New Password",
+    "new_password_placeholder": "Minimum 6 characters",
+    "btn_update_password": "Update Password",
+    "btn_loading": "Please wait..."
   }
 }

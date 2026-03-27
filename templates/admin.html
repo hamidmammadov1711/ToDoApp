@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="az">
+<html lang="{{ lang }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ t.todo.page_title }}</title>
+    <title>{{ t.admin.page_title }}</title>
     <style>
         * {
             margin: 0;
@@ -60,6 +60,7 @@
             justify-content: center;
             font-size: 22px;
             backdrop-filter: blur(10px);
+            text-decoration: none;
         }
 
         .app-title {
@@ -73,7 +74,18 @@
             font-size: 13px;
         }
 
-        .btn-logout {
+        .user-info a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .user-info a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .btn-logout, .btn-home {
             padding: 10px 20px;
             background: rgba(255, 255, 255, 0.15);
             color: white;
@@ -84,9 +96,11 @@
             cursor: pointer;
             transition: all 0.3s;
             backdrop-filter: blur(10px);
+            text-decoration: none;
+            display: inline-block;
         }
 
-        .btn-logout:hover {
+        .btn-logout:hover, .btn-home:hover {
             background: rgba(255, 255, 255, 0.25);
             transform: translateY(-1px);
         }
@@ -119,27 +133,6 @@
             border-radius: 20px;
             font-size: 13px;
             font-weight: 600;
-        }
-
-        .btn-add {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-        }
-
-        .btn-add:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.35);
         }
 
         /* Todo List */
@@ -225,32 +218,21 @@
             flex-shrink: 0;
         }
 
-        .status-pending {
-            background: #fef3c7;
-            color: #d97706;
-        }
-
-        .status-done {
-            background: #d1fae5;
-            color: #059669;
-        }
-
-        .btn-edit {
+        .btn-delete {
             padding: 8px 16px;
-            background: #f1f3f4;
-            color: #555;
-            border: none;
+            background: #fef2f2;
+            color: #ef4444;
+            border: 1px solid #fca5a5;
             border-radius: 10px;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            text-decoration: none;
             flex-shrink: 0;
         }
 
-        .btn-edit:hover {
-            background: #667eea;
+        .btn-delete:hover {
+            background: #ef4444;
             color: white;
         }
 
@@ -276,19 +258,91 @@
             margin-bottom: 25px;
         }
 
-        @media (max-width: 600px) {
-            .card-header {
-                flex-direction: column;
-                gap: 15px;
-                align-items: flex-start;
-            }
+        /* Modal styling */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
 
+        .modal {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .modal.active {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .modal h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .modal p {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn-modal-cancel {
+            padding: 10px 20px;
+            background: #f1f3f4;
+            color: #555;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-modal-cancel:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-modal-confirm {
+            padding: 10px 20px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-modal-confirm:hover {
+            background: #dc2626;
+        }
+
+        @media (max-width: 600px) {
             .todo-item {
                 flex-wrap: wrap;
-            }
-
-            .todo-status {
-                order: 4;
             }
         }
     </style>
@@ -298,26 +352,24 @@
     <!-- Top Bar -->
     <div class="top-bar">
         <div class="top-bar-left">
-            <a href="/todos/todo-page" class="app-logo" style="text-decoration: none;">✅</a>
+            <a href="/todos/todo-page" class="app-logo">✅</a>
             <div>
                 <div class="app-title">Todo App</div>
                 {% if user %}
                 <div class="user-info">
-                    <a href="/user/profile-page" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='white'; this.style.textDecoration='underline';" onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'; this.style.textDecoration='none';">👤 {{ user.username }}</a>
-                    {% if user.user_role == 'admin' %} | 👑 Admin {% endif %}
+                    <a href="/user/profile-page">👤 {{ user.username }}</a>
+                    | 👑 Admin
                 </div>
                 {% endif %}
             </div>
         </div>
         <div class="top-bar-right" style="display: flex; align-items: center; gap: 15px;">
-            {% if user and user.user_role == 'admin' %}
-            <a href="/admin/admin-page" class="btn-home" style="padding: 10px 20px; background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; backdrop-filter: blur(10px); text-decoration: none; display: inline-block;">👑 Admin</a>
-            {% endif %}
+            <a href="/todos/todo-page" class="btn-home">{{ t.nav.home }}</a>
             <div class="lang-switcher" style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 20px; backdrop-filter: blur(10px);">
                 <a href="/set-language/az" style="text-decoration: none; font-size: 20px; margin-right: 8px; opacity: {% if lang == 'az' %}1{% else %}0.5{% endif %};" title="Azərbaycanca">🇦🇿</a>
                 <a href="/set-language/en" style="text-decoration: none; font-size: 20px; opacity: {% if lang == 'en' %}1{% else %}0.5{% endif %};" title="English">🇬🇧</a>
             </div>
-            <button class="btn-logout" onclick="logout()">{{ t.todo.logout }}</button>
+            <button class="btn-logout" onclick="logout()">{{ t.nav.logout }}</button>
         </div>
     </div>
 
@@ -325,53 +377,118 @@
     <div class="main-card">
         <div class="card-header">
             <div>
-                <h2>{{ t.todo.header }}</h2>
+                <h2>{{ t.admin.header }}</h2>
                 {% if todos %}
-                <span class="todo-count">{{ todos|length }} {{ t.todo.task_count }}</span>
+                <span class="todo-count">{{ todos|length }} {{ t.admin.task_count }}</span>
                 {% endif %}
             </div>
-            <a href="/todos/add-todo-page" class="btn-add">{{ t.todo.btn_add }}</a>
         </div>
 
         <div class="todo-list">
             {% if todos %}
                 {% for todo in todos %}
-                <div class="todo-item {% if todo.complete %}completed{% endif %}">
+                <div class="todo-item {% if todo.complete %}completed{% endif %}" id="todo-item-{{ todo.id }}">
                     <div class="todo-priority priority-{{ todo.priority }}">{{ todo.priority }}</div>
-                    <div class="todo-content">
-                        <div class="todo-title">{{ todo.title }}</div>
+                    <div class="todo-content" title="ID: {{ todo.id }} | Owner ID: {{ todo.owner_id }}">
+                        <div class="todo-title">{{ todo.title }} (ID: {{ todo.id }})</div>
                         <div class="todo-desc">{{ todo.description }}</div>
                     </div>
                     {% if todo.complete %}
-                    <span class="todo-status status-done">{{ t.todo.status_done }}</span>
+                    <span class="todo-status" style="background: #d1fae5; color: #059669;">{{ t.todo.status_done }}</span>
                     {% else %}
-                    <span class="todo-status status-pending">{{ t.todo.status_pending }}</span>
+                    <span class="todo-status" style="background: #fef3c7; color: #d97706;">{{ t.todo.status_pending }}</span>
                     {% endif %}
-                    <a href="/todos/edit-todo-page/{{ todo.id }}" class="btn-edit">{{ t.todo.btn_edit }}</a>
+                    <button class="btn-delete" onclick="openDeleteModal({{ todo.id }})">{{ t.admin.btn_delete }}</button>
                 </div>
                 {% endfor %}
             {% else %}
                 <div class="empty-state">
                     <div class="empty-icon">📝</div>
-                    <h3>{{ t.todo.empty_header }}</h3>
-                    <p>{{ t.todo.empty_desc }}</p>
-                    <a href="/todos/add-todo-page" class="btn-add">{{ t.todo.empty_btn }}</a>
+                    <h3>{{ t.admin.empty_header }}</h3>
+                    <p>{{ t.admin.empty_desc }}</p>
                 </div>
             {% endif %}
         </div>
     </div>
 </div>
 
+<!-- Delete Modal -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal" id="modalContent">
+        <h3>{{ t.admin.modal_header }}</h3>
+        <p>{{ t.admin.modal_desc }}</p>
+        <div class="modal-actions">
+            <button class="btn-modal-cancel" onclick="closeDeleteModal()">{{ t.admin.modal_cancel }}</button>
+            <button class="btn-modal-confirm" id="confirmDeleteBtn" onclick="confirmDelete()">{{ t.admin.modal_confirm }}</button>
+        </div>
+    </div>
+</div>
+
 <script>
-    function logout() {
-        // Bütün cookie-ləri sil
-        const cookies = document.cookie.split(";");
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i];
-            const eqPos = cookie.indexOf("=");
-            const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-            document.cookie = name.trim() + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+    let todoToDelete = null;
+
+    function openDeleteModal(id) {
+        todoToDelete = id;
+        const overlay = document.getElementById('deleteModal');
+        const content = document.getElementById('modalContent');
+        overlay.style.display = 'flex';
+        setTimeout(() => content.classList.add('active'), 10);
+    }
+
+    function closeDeleteModal() {
+        todoToDelete = null;
+        const overlay = document.getElementById('deleteModal');
+        const content = document.getElementById('modalContent');
+        content.classList.remove('active');
+        setTimeout(() => overlay.style.display = 'none', 300);
+    }
+
+    async function confirmDelete() {
+        if (!todoToDelete) return;
+        
+        const btn = document.getElementById('confirmDeleteBtn');
+        const originalText = btn.innerText;
+        btn.innerText = '{{ t.admin.modal_loading }}';
+        btn.disabled = true;
+
+        try {
+            const token = getCookie("access_token");
+            const response = await fetch(`/admin/todo/${todoToDelete}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                // Remove the element from the list visually
+                const elementToRemove = document.getElementById(`todo-item-${todoToDelete}`);
+                if (elementToRemove) {
+                    elementToRemove.style.opacity = '0';
+                    setTimeout(() => elementToRemove.remove(), 300);
+                }
+                closeDeleteModal();
+            } else {
+                alert('Xəta baş verdi!');
+            }
+        } catch (error) {
+            console.error('Error deleting todo:', error);
+            alert('Xəta baş verdi!');
+        } finally {
+            btn.innerText = originalText;
+            btn.disabled = false;
         }
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return '';
+    }
+
+    function logout() {
+        document.cookie = "access_token=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
         window.location.href = '/auth/login-page';
     }
 </script>

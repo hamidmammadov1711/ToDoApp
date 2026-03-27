@@ -97,5 +97,40 @@
     "modal_confirm": "Bəli, Sil",
     "modal_cancel": "Xeyr",
     "modal_loading": "Silinir..."
+  },
+  "admin": {
+    "page_title": "Admin Paneli - Todo App",
+    "header": "👑 Admin Paneli",
+    "btn_delete": "🗑️ Sil",
+    "modal_header": "⚠️ Tapşırığı Sil",
+    "modal_desc": "Bu tapşırığı silmək istədiyinizə əminsiniz? (Admin olaraq silinir)",
+    "modal_confirm": "Bəli, Sil",
+    "modal_cancel": "Xeyr",
+    "modal_loading": "Silinir...",
+    "empty_header": "Tapşırıq Yoxdur",
+    "empty_desc": "Sistemdə heç bir tapşırıq yoxdur.",
+    "task_count": "ümumi tapşırıq"
+  },
+  "profile": {
+    "page_title": "Profilim - Todo App",
+    "header": "👤 Profilim",
+    "user_info_header": "İstifadəçi Məlumatları",
+    "username": "İstifadəçi adı",
+    "email": "E-poçt",
+    "first_name": "Ad",
+    "last_name": "Soyad",
+    "role": "Rol",
+    "phone": "Telefon",
+    "change_phone_header": "📱 Telefon nömrəsini dəyiş",
+    "phone_label": "Yeni Telefon",
+    "phone_placeholder": "+994 XX XXX XX XX",
+    "btn_update_phone": "Nömrəni Yenilə",
+    "change_password_header": "🔐 Şifrəni dəyiş",
+    "old_password_label": "Köhnə Şifrə",
+    "old_password_placeholder": "Cari şifrənizi daxil edin",
+    "new_password_label": "Yeni Şifrə",
+    "new_password_placeholder": "Minimum 6 simvol",
+    "btn_update_password": "Şifrəni Yenilə",
+    "btn_loading": "Zəhmət olmasa gözləyin..."
   }
 }

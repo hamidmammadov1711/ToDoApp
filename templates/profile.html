@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ t.profile.page_title }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 700px;
+            margin: 0 auto;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Top Bar */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 0 5px;
+        }
+
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .app-logo {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+        }
+
+        .app-title {
+            color: white;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .user-info {
+            color: white;
+            font-size: 13px;
+        }
+
+        .btn-logout, .btn-home {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-logout:hover, .btn-home:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-1px);
+        }
+
+        /* Main Card */
+        .main-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .card-header {
+            padding: 30px 35px 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .card-header h2 {
+            color: #333;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        /* Profile details */
+        .profile-content {
+            padding: 30px 35px;
+        }
+        
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .info-value {
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e1e5eb;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.35);
+        }
+
+        .badge-role {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <a href="/todos/todo-page" class="app-logo">✅</a>
+            <div>
+                <div class="app-title">Todo App</div>
+                <div class="user-info">👤 {{ user.username }} {% if user.user_role == 'admin' %} | 👑 Admin {% endif %}</div>
+            </div>
+        </div>
+        <div class="top-bar-right" style="display: flex; align-items: center; gap: 15px;">
+            {% if user.user_role == 'admin' %}
+            <a href="/admin/admin-page" class="btn-home">👑 Admin</a>
+            {% endif %}
+            <a href="/todos/todo-page" class="btn-home">{{ t.nav.home }}</a>
+            <div class="lang-switcher" style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 20px; backdrop-filter: blur(10px);">
+                <a href="/set-language/az" style="text-decoration: none; font-size: 20px; margin-right: 8px; opacity: {% if lang == 'az' %}1{% else %}0.5{% endif %};" title="Azərbaycanca">🇦🇿</a>
+                <a href="/set-language/en" style="text-decoration: none; font-size: 20px; opacity: {% if lang == 'en' %}1{% else %}0.5{% endif %};" title="English">🇬🇧</a>
+            </div>
+            <button class="btn-logout" onclick="logout()">{{ t.nav.logout }}</button>
+        </div>
+    </div>
+
+    <!-- User Info Card -->
+    <div class="main-card">
+        <div class="card-header">
+            <h2>{{ t.profile.user_info_header }}</h2>
+        </div>
+        <div class="profile-content profile-section">
+            <div class="info-row">
+                <span class="info-label">{{ t.profile.role }}</span>
+                <span class="info-value"><span class="badge-role">{{ user_db.role|upper }}</span></span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">{{ t.profile.username }}</span>
+                <span class="info-value">{{ user_db.username }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">{{ t.profile.email }}</span>
+                <span class="info-value">{{ user_db.email }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">{{ t.profile.first_name }}</span>
+                <span class="info-value">{{ user_db.first_name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">{{ t.profile.last_name }}</span>
+                <span class="info-value">{{ user_db.last_name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">{{ t.profile.phone }}</span>
+                <span class="info-value" id="currentPhoneDisplay">{{ user_db.phone_number }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Phone Card -->
+    <div class="main-card">
+        <div class="card-header">
+            <h2>{{ t.profile.change_phone_header }}</h2>
+        </div>
+        <div class="profile-content">
+            <form id="phoneForm" onsubmit="updatePhone(event)">
+                <div class="form-group">
+                    <label class="form-label">{{ t.profile.phone_label }}</label>
+                    <input type="text" id="phoneInput" class="form-control" value="{{ user_db.phone_number }}" placeholder="{{ t.profile.phone_placeholder }}" required>
+                </div>
+                <button type="submit" class="btn-submit" id="btnPhoneSubmit">{{ t.profile.btn_update_phone }}</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Change Password Card -->
+    <div class="main-card">
+        <div class="card-header">
+            <h2>{{ t.profile.change_password_header }}</h2>
+        </div>
+        <div class="profile-content">
+            <form id="passwordForm" onsubmit="updatePassword(event)">
+                <div class="form-group">
+                    <label class="form-label">{{ t.profile.old_password_label }}</label>
+                    <input type="password" id="oldPassword" class="form-control" placeholder="{{ t.profile.old_password_placeholder }}" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">{{ t.profile.new_password_label }}</label>
+                    <input type="password" id="newPassword" class="form-control" placeholder="{{ t.profile.new_password_placeholder }}" minlength="6" required>
+                </div>
+                <button type="submit" class="btn-submit" id="btnPasswordSubmit">{{ t.profile.btn_update_password }}</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return '';
+    }
+
+    async function updatePhone(event) {
+        event.preventDefault();
+        const phone = document.getElementById('phoneInput').value;
+        const btn = document.getElementById('btnPhoneSubmit');
+        const token = getCookie("access_token");
+        
+        const originalText = btn.innerText;
+        btn.innerText = '{{ t.profile.btn_loading }}';
+        btn.disabled = true;
+
+        try {
+            const response = await fetch(`/user/phonenumber/${encodeURIComponent(phone)}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                document.getElementById('currentPhoneDisplay').innerText = phone;
+                alert('Telefon nömrəsi uğurla yeniləndi! / Phone number updated successfully!');
+            } else {
+                alert('Xəta baş verdi! / An error occurred!');
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Xəta baş verdi! / An error occurred!');
+        } finally {
+            btn.innerText = originalText;
+            btn.disabled = false;
+        }
+    }
+
+    async function updatePassword(event) {
+        event.preventDefault();
+        const oldPassword = document.getElementById('oldPassword').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const btn = document.getElementById('btnPasswordSubmit');
+        const token = getCookie("access_token");
+        
+        const originalText = btn.innerText;
+        btn.innerText = '{{ t.profile.btn_loading }}';
+        btn.disabled = true;
+
+        try {
+            const response = await fetch(`/user/password`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    password: oldPassword,
+                    new_password: newPassword
+                })
+            });
+
+            if (response.ok) {
+                document.getElementById('oldPassword').value = '';
+                document.getElementById('newPassword').value = '';
+                alert('Şifrəniz uğurla yeniləndi! / Password updated successfully!');
+            } else {
+                alert('Köhnə şifrə yanlışdır! / Old password incorrect!');
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Xəta baş verdi! / An error occurred!');
+        } finally {
+            btn.innerText = originalText;
+            btn.disabled = false;
+        }
+    }
+
+    function logout() {
+        document.cookie = "access_token=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+        window.location.href = '/auth/login-page';
+    }
+</script>
+</body>
+</html>

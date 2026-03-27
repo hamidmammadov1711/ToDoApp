@@ -26,6 +26,14 @@
         </li>
         {% if user %}
         <li class="nav-item m-1">
+          <a class="nav-link text-white" href="/user/profile-page" style="border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; padding: 6px 14px;">👤 {{ user.username }}</a>
+        </li>
+        {% if user.user_role == 'admin' %}
+        <li class="nav-item m-1">
+          <a class="nav-link text-warning" href="/admin/admin-page" style="border: 1px solid rgba(255,193,7,0.5); border-radius: 8px; padding: 6px 14px;">👑 Admin</a>
+        </li>
+        {% endif %}
+        <li class="nav-item m-1">
           <a type="button" class="btn btn-outline-light text-white" onclick="logout()">{{ t.nav.logout }}</a>
         </li>
         {% endif %}
